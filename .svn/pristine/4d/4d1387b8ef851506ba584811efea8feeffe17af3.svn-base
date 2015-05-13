@@ -1,0 +1,245 @@
+//
+//  InSideMsgViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/10/28.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "InSideMsgViewController.h"
+#import "InSideMsgCell.h"
+#import "InSideMsgDetailViewController.h"
+
+#import "UIImageView+WebCache.h"
+#import "UIWaitView.h"
+
+#import "UtilTool.h"
+#import "SBJsonParser.h"
+#import "Constants.h"
+
+@interface InSideMsgViewController ()
+
+@end
+
+@implementation InSideMsgViewController
+
+@synthesize tableView = _tableView;
+
+@synthesize waitView=_waitView;
+
+@synthesize inSideMsgs;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.tableView.customDelegate =self;
+    
+    self.navTitle=CHECK_ISM_TITLE;
+    self.hideRightBut=YES;
+    
+    self.pageSize=PAGESIZE;
+    self.curPage=PAGEINDEX;
+    
+    self.waitView = [[UIWaitView alloc] init:self.view.frame];
+    [self.waitView.aiv startAnimating];
+    [self.view addSubview:self.waitView];
+    [self performSelector:@selector(indexLoadData) withObject:nil afterDelay:0.5];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+//初始化加载数据，如果缓存存在数据，从缓存加载
+-(void)indexLoadData{
+    NSNumber *status;
+    NSString *url=[NSString stringWithFormat:@"manager/message/list?json={'pageIndex':%ld,'pageSize':%ld,'token':'%@'}",self.curPage,self.pageSize,[UtilTool getToken]];
+    url = [NSMutableString stringWithFormat:@"%@%@",[UtilTool getHostURL],url];
+    
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&status];
+    
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    
+    if([status intValue]==3){
+        [NSThread detachNewThreadSelector:@selector(getInSideMsgsData) toTarget:self withObject:nil];
+    }else{
+        if(jsonString== nil){
+            [self performSelector:@selector(loginTimeout) withObject:nil afterDelay:0.5];
+            return;
+        }
+        NSDictionary *validDic = [parser objectWithString:jsonString];
+        if(validDic[@"status"]!=[NSNull null] && [validDic[@"status"] isEqual:@"500"]){
+            [self performSelector:@selector(loginTimeout) withObject:nil afterDelay:0.5];
+            return;
+        }
+    }
+    
+    if(jsonString && [jsonString length]>0){
+        NSDictionary *dic = [parser objectWithString:jsonString];
+        //当为第一页，进行设置；否则加入原数组
+        if(self.curPage==1)
+            inSideMsgs = [dic objectForKey:@"messages"];
+        else
+            [inSideMsgs addObjectsFromArray:[dic objectForKey:@"messages"]];
+        
+        self.totalPages=[[dic objectForKey:@"totalPage"]integerValue];
+    }
+    
+    [_waitView.aiv stopAnimating];
+    [_waitView removeFromSuperview];
+    //table重新加载数据
+    [_tableView reloadData];
+    
+    [self.tableView refreshSuccessed];
+}
+
+//得到内部消息列表数据
+-(void)getInSideMsgsData{
+    NSString *url=[NSString stringWithFormat:@"manager/message/list?json={'pageIndex':%ld,'pageSize':%ld,'token':'%@'}",self.curPage,self.pageSize,[UtilTool getToken]];
+    url = [NSMutableString stringWithFormat:@"%@%@",[UtilTool getHostURL],url];
+    NSNumber *state;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&state];
+    
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        NSDictionary *dic = [parser objectWithString:jsonString];
+        //当为第一页，进行设置；否则加入原数组
+        if(self.curPage==1)
+            inSideMsgs = [dic objectForKey:@"messages"];
+        else
+            [inSideMsgs addObjectsFromArray:[dic objectForKey:@"messages"]];
+        
+        self.totalPages=[[dic objectForKey:@"totalPage"]integerValue];
+    }
+    
+    [_waitView.aiv stopAnimating];
+    [_waitView removeFromSuperview];
+    //table重新加载数据
+    [_tableView reloadData];
+    
+    [self.tableView refreshSuccessed];
+}
+
+-(void)loginTimeout{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"过期" message:@"登录过期，请重新登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    alertView.tag = 500;
+    [alertView show];
+}
+//--------------------tableView代理start-------------------
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSInteger rows = [self.inSideMsgs count];
+    if (self.totalPages > self.curPage) {
+        rows += 1;
+    }
+    return rows;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    InSideMsgCell *cell=[tableView dequeueReusableCellWithIdentifier:@"InSideMsgCell"];
+    //若当前table下标值大于等于列表数据，则将该cell设置为“更多”的cell
+    if([indexPath row]>=[self.inSideMsgs count]){
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SimpleTableIdentifier"];
+        cell.textLabel.text = PAGE_MORE_MSG;
+        cell.textLabel.textColor=[UIColor grayColor];
+        [cell.textLabel setFont:[UIFont systemFontOfSize:15.0]];
+        cell.tag = 1000;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+        return cell;
+    }
+    //设置cell数据信息
+    NSDictionary *inSideMsg=[self.inSideMsgs objectAtIndex:indexPath.row];
+    //设置时间年月日
+    NSString *date=[inSideMsg objectForKey:@"createDate"];
+    cell.timeLabel.text=[date substringWithRange:NSMakeRange(0, 10)];
+    //设置标题
+    cell.titleLabel.text=[inSideMsg objectForKey:@"title"];
+    //设置内容
+    cell.instroLabel.text=[inSideMsg objectForKey:@"summary"];
+//    NSAttributedString * content = [[NSAttributedString alloc] initWithData:[[inSideMsg objectForKey:@"content"] dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType } documentAttributes:nil error:nil];
+//    cell.instroLabel.attributedText=content;
+    
+    //设置图片
+    id path=[inSideMsg objectForKey:@"thumbnailUrl"];
+    if(![path isKindOfClass:[NSNull class]]){
+         [cell.iconImageView setImageWithURL:[NSURL URLWithString:path] placeholderImage:[UIImage imageNamed:@"noPicIcon.png"]];
+    }else{
+        cell.iconImageView.image=[UIImage imageNamed:@"noPicIcon.png"];
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    InSideMsgCell *cell = (InSideMsgCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //如果tag=1000,即加载下一页数据
+    if (cell.tag == 1000) {
+        ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        ai.frame = CGRectMake(10, 10, 50, 50);
+        [ai startAnimating];
+        [cell addSubview:ai];
+        self.curPage++;
+        if(self.curPage>self.totalPages){
+            self.curPage = self.totalPages;
+        }
+        [self performSelector:@selector(getInSideMsgsData) withObject:nil afterDelay:0.5];
+    }else {
+        NSDictionary *inSideMsg=[self.inSideMsgs objectAtIndex:indexPath.row];
+       
+        [self performSegueWithIdentifier:@"msgList2detail" sender:inSideMsg];
+        
+   
+    }
+
+}
+
+//实现下拉刷新协议的两个方法
+- (void)refreshTableView:(id)sender {
+    self.curPage=1;
+    [self performSelector:@selector(getInSideMsgsData) withObject:nil afterDelay:0.5];
+}
+
+- (void)gotoNextPage:(id)sender {
+
+}
+//将滚动事件传递到table的方法
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self.tableView scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [self.tableView scrollViewWillBeginDragging:scrollView];
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.tableView scrollViewDidScroll:scrollView];
+}
+//将滚动事件传递到table的方法结束
+//--------------------tableView代理end-------------------
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+-(void)clickBack:(UITapGestureRecognizer *)gesture{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([@"msgList2detail" isEqualToString:segue.identifier]) {
+        NSDictionary *inSideMsg = (NSDictionary *)sender;
+        
+        InSideMsgDetailViewController *vc=segue.destinationViewController;
+        vc.msgTitle=[inSideMsg objectForKey:@"title"];
+        vc.messageId=[[inSideMsg objectForKey:@"id"] longValue];
+    }
+    
+}
+
+@end

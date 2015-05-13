@@ -1,0 +1,335 @@
+//
+//  AddReportViewController.m
+//  Cancer
+//
+//  Created by zpj on 14/10/31.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "AddReportViewController.h"
+
+@interface AddReportViewController ()
+
+@end
+
+@implementation AddReportViewController
+
+@synthesize reportTitle;
+@synthesize reportContent;
+@synthesize recScrollView;
+@synthesize ccScrollView;
+@synthesize reportView;
+
+@synthesize enterBtn;
+@synthesize cancelBtn;
+@synthesize waitView;
+
+@synthesize topConstraint;
+@synthesize isReciver;
+@synthesize recArray;
+@synthesize ccArray;
+
+float topValue;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.hideRightBut=YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(enterClick:)];
+    [enterBtn addGestureRecognizer:tap];
+    
+    tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cancelClick:)];
+    [cancelBtn addGestureRecognizer:tap];
+    
+    waitView = [[UIWaitView alloc]initWithFrame:self.view.frame];
+    
+
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    topValue = topConstraint.constant;
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+//导航栏左边按钮
+-(void)clickBack:(UITapGestureRecognizer *)gesture
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//导航栏右边按钮
+-(void)share:(UITapGestureRecognizer *)gesture
+{
+    
+}
+
+//textview 代理
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ( [text isEqualToString:@"\n"] ) {
+        [textView resignFirstResponder];
+    }
+    return YES;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    topConstraint.constant = -100.0f;
+    reportView.frame = CGRectMake(reportView.frame.origin.x, 100, reportView.frame.size.width, reportView.frame.size.height);
+
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    topConstraint.constant = topValue;
+}
+
+//------------------------ 各种事件 -------------
+
+-(IBAction)enterClick:(id)sender
+{
+    if (reportTitle.text.length < 4) {
+        [UtilTool ShowAlertView:nil setMsg:@"汇报标题不得少于4个字"];
+        return;
+    }
+    if (reportContent.text.length < 10) {
+        [UtilTool ShowAlertView:nil setMsg:@"汇报内容不得少于10个字"];
+        return;
+
+    }
+    if (recArray == nil || recArray.count < 1) {
+        [UtilTool ShowAlertView:nil setMsg:@"汇报至少要有一个收件人"];
+        return;
+    }
+    [waitView.aiv startAnimating];
+    [self.view addSubview:waitView];
+    [self performSelector:@selector(addReport) withObject:NULL afterDelay:0.1];
+}
+
+-(IBAction)cancelClick:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+//添加收件人
+-(IBAction)recBtnClick:(id)sender
+{
+    
+    isReciver = YES;
+    NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
+    if (recArray != nil) {
+        for (int i = 0; i < recArray.count; i++) {
+            NSMutableDictionary *d = [recArray objectAtIndex:i];
+            NSNumber *n = [d objectForKey:@"id"];
+            [params setObject:d forKey:n.stringValue];
+        }
+    }
+    
+    [self performSegueWithIdentifier:@"showContacts" sender:params];
+}
+
+//添加抄送人
+-(IBAction)ccBtnClick:(id)sender
+{
+    
+    isReciver = NO;
+    NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
+    if (ccArray != nil) {
+        for (int i = 0; i < ccArray.count; i++) {
+            NSMutableDictionary *d = [ccArray objectAtIndex:i];
+            NSNumber *n = [d objectForKey:@"id"];
+            [params setObject:d forKey:n.stringValue];
+        }
+    }
+    [self performSegueWithIdentifier:@"showContacts" sender:params];
+}
+
+//更新联系人
+-(void)updateContacts
+{
+    
+    if (isReciver) {
+        
+        [recScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        
+        if (recArray != nil) {
+            
+            float offset = 0;
+            for (int i = 0; i < recArray.count; i++) {
+                NSDictionary *tmp = [recArray objectAtIndex:i];
+                UILabel *lab = [[UILabel alloc]init];
+                lab.font = [UIFont systemFontOfSize:14.0f];
+                
+                NSString *name = nil;
+                
+                if (i != recArray.count - 1) {
+                    name = [NSString stringWithFormat:@" %@,", [tmp objectForKey:@"name"]];
+                }else{
+                    name = [NSString stringWithFormat:@" %@", [tmp objectForKey:@"name"]];
+                }
+//                CGSize size = [name sizeWithFont:lab.font constrainedToSize:CGSizeMake(MAXFLOAT, recScrollView.frame.size.height)];
+                
+                NSDictionary *attribute = @{NSFontAttributeName: [UtilTool currentSystemFont:12.0f]};
+                CGSize maxSize =CGSizeMake(MAXFLOAT, recScrollView.frame.size.height);
+                CGSize size = [name boundingRectWithSize:maxSize options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+
+                
+                lab.frame = CGRectMake(offset, 0, size.width, recScrollView.frame.size.height);
+                lab.text = name;
+                lab.textColor = [UIColor blackColor];
+                lab.textAlignment = NSTextAlignmentLeft;
+                offset = offset + size.width;
+                [recScrollView addSubview:lab];
+            }
+            
+            recScrollView.contentSize = CGSizeMake(offset, recScrollView.frame.size.height);
+        }
+
+    }else{
+        
+        [ccScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//        for (int i = 0; i < ccScrollView.subviews.count; i++) {
+//            UIView *v  = ccScrollView.subviews[i];
+//            [v removeFromSuperview];
+//        }
+        
+        if (ccArray != nil) {
+            
+            float offset = 0;
+            for (int i = 0; i < ccArray.count; i++) {
+                
+                NSDictionary *tmp = [ccArray objectAtIndex:i];
+                UILabel *lab = [[UILabel alloc]init];
+                lab.font = [UIFont systemFontOfSize:14.0f];
+                
+                NSString *name = nil;
+                
+                if (i != ccArray.count - 1) {
+                    name = [NSString stringWithFormat:@" %@,", [tmp objectForKey:@"name"]];
+                }else{
+                    name = [NSString stringWithFormat:@" %@", [tmp objectForKey:@"name"]];
+                }
+//                CGSize size = [name sizeWithFont:lab.font constrainedToSize:CGSizeMake(MAXFLOAT, ccScrollView.frame.size.height)];
+                
+                
+                NSDictionary *attribute = @{NSFontAttributeName: [UtilTool currentSystemFont:12.0f]};
+                CGSize maxSize =CGSizeMake(MAXFLOAT, ccScrollView.frame.size.height);
+                CGSize size = [name boundingRectWithSize:maxSize options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+                
+
+                
+                
+                lab.frame = CGRectMake(offset, 0, size.width, ccScrollView.frame.size.height);
+                lab.text = name;
+                lab.textColor = [UIColor blackColor];
+                lab.textAlignment = NSTextAlignmentLeft;
+                offset = offset + size.width;
+                [ccScrollView addSubview:lab];
+            }
+        }
+    }
+}
+
+/**
+ *给ViewController传递参数
+ */
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showContacts"]) {
+        
+        ContactsViewController *ctv = (ContactsViewController *)segue.destinationViewController;
+        ctv.addReportViewController = self;
+        ctv.selectDict = (NSMutableDictionary *)sender;
+    }
+}
+
+//-------------------------------------------
+//提交汇报
+-(void)addReport
+{
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSString *token = [userDic objectForKey:@"token"];
+    NSDictionary *user = [[userDic objectForKey:@"user"] objectAtIndex:0];
+    NSString *url=[[NSString alloc]initWithFormat:@"%@manager/jobReport/save2",[UtilTool getHostURL]];
+    
+    NSMutableString *param = [[NSMutableString alloc]init];
+    [param appendFormat:@"json={"];
+    [param appendFormat:@"\"token\":\"%@\" ,", token];
+    [param appendFormat:@"\"userId\":%i ,", [[user objectForKey:@"id"] intValue] ];
+    [param appendFormat:@"\"title\":\"%@\" ,", reportTitle.text];
+    [param appendFormat:@"\"content\":\"%@\" ,", reportContent.text];
+    
+    
+    NSMutableString *tmp = [[NSMutableString alloc]init];
+    if (recArray != nil ) {
+        for (int i = 0; i < recArray.count; i++) {
+            NSDictionary *dict = [recArray objectAtIndex:i];
+            NSNumber *n = [dict objectForKey:@"id"];
+            [tmp appendString:n.stringValue];
+            [tmp appendString:@","];
+        }
+    }
+    NSLog(@"%@", [tmp substringToIndex:tmp.length - 1]);
+
+    
+    if (ccArray != nil ) {
+        [param appendFormat:@"\"mainReceiver\":\"%@\" ,", [tmp substringToIndex:tmp.length - 1]];
+        tmp = [[NSMutableString alloc]init];
+        
+        for (int i = 0; i < ccArray.count; i++) {
+            NSDictionary *dict = [ccArray objectAtIndex:i];
+            NSNumber *n = [dict objectForKey:@"id"];
+            [tmp appendString:n.stringValue];
+            [tmp appendString:@","];
+        }
+        NSLog(@"%@", [tmp substringToIndex:tmp.length - 1]);
+        [param appendFormat:@"\"copyReceiver\":\"%@\" ", [tmp substringToIndex:tmp.length - 1]];
+    }else{
+        [param appendFormat:@"\"mainReceiver\":\"%@\" ,", [tmp substringToIndex:tmp.length - 1]];
+        [param appendFormat:@"\"copyReceiver\":\"%@\" ", @""];
+    }
+
+    [param appendFormat:@"}"];
+    
+    
+    NSNumber *num = nil;
+    NSString *str = [UtilTool sendUrlRequestByCache:url paramValue:param method:HTTPRequestMethodPost isReload:YES status:&num];
+    
+    [waitView.aiv stopAnimating];
+    [waitView removeFromSuperview];
+    
+    SBJsonParser *parser=[[SBJsonParser alloc]init];
+    NSDictionary *jsonDict=[parser objectWithString:str];
+    
+    NSNumber *result = [jsonDict objectForKey:@"status"];
+    if ([result intValue]== 200) {
+    
+        [UtilTool  ShowAlertView:nil setMsg:@"您的汇报已发送！"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        // 请求不成功后返回什么错误？统一api
+        if([jsonDict valueForKey:@"msg"] != nil)
+            [UtilTool ShowAlertView:nil setMsg:[jsonDict valueForKey:@"msg"]];
+        else
+            [UtilTool ShowAlertView:nil setMsg:@"系统繁忙,请稍后重试"];
+        
+    }
+
+}
+
+
+@end

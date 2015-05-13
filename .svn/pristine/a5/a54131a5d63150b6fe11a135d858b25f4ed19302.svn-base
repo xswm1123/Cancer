@@ -1,0 +1,36 @@
+//
+//  Constants.h
+//  Cancer
+//
+//  Created by Parsec on 14-10-29.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+@interface Constants : NSObject
+
+//对话框弹出的标题
+#define ALERT_WARN_TITLE @"信息"
+//保存成功消息
+#define ALERT_SAVE_SUCCESSMSG @"保存成功"
+//照相机打开失败消息
+#define OPEN_CAMERA_ERRORMSG @"无法打开照相机！"
+//定位失败消息
+#define LOCATION_ERRORMSG @"定位失败"
+//分页加载更多信息
+#define PAGE_MORE_MSG @"更多"
+#define PAGEINDEX 1
+#define PAGESIZE 10
+
+//卡片：选择图片
+#define SHEET_PIC_SOURCE_TITLE @"来源"
+#define SHEET_PIC_SOURCE_CAMERA @"照相机"
+#define SHEET_PIC_SOURCE_PHOTO @"相册"
+#define SHEET_PIC_SOURCE_CACEL @"取消"
+
+//定义controller标题
+#define CHECK_VC_TITLE @"考勤管理"
+#define ATTENDANCE_VC_TITLE @"考勤添加"
+
+#define CHECK_ISM_TITLE @"内部消息"
+
+@end

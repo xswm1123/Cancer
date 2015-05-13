@@ -1,0 +1,16 @@
+//
+//  InSideMsgViewController.h
+//  Cancer
+//
+//  Created by hu su on 14/10/28.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "CommonViewController.h"
+#import "CommonTableView.h"
+
+@interface InSideMsgViewController : CommonViewController<UITableViewDataSource,UITableViewDelegate,PullRefreshDelegate>
+
+@property (nonatomic, strong) IBOutlet CommonTableView *tableView;
+
+@end

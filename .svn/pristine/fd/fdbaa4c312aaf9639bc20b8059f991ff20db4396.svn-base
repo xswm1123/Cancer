@@ -1,0 +1,156 @@
+//
+//  AdviceController.m
+//  Cancer
+//
+//  Created by Parsec on 14-11-4.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "AdviceController.h"
+
+#import "UtilTool.h"
+#import "Constants.h"
+#import "SBJsonParser.h"
+
+@implementation AdviceController{
+    NSString *placeContent;
+    NSString *errorContent;
+}
+
+@synthesize waitView;
+
+@synthesize textView;
+
+@synthesize wdithSubBtn;
+
+-(void)viewDidLoad{
+    self.navTitle=ADVICE_VC_TITLE;
+    placeContent=@"输入内容";
+    errorContent=@"请输入内容";
+    self.hideRightBut=YES;
+    
+    [self.textView becomeFirstResponder];
+    
+    UITapGestureRecognizer *gs=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(BackGroundTag:)];
+    [self.view addGestureRecognizer:gs];
+    self.view.userInteractionEnabled=YES;
+    
+    [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    float wdith=self.view.frame.size.width/3;
+    
+    [self.submitView removeConstraint:self.wdithSubBtn];
+    //接下来通过代码添加一个约束
+    [self.submitView addConstraint:[NSLayoutConstraint constraintWithItem:
+       self.submitView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:wdith*2]];
+    //先删除原有的对于宽度的约束
+    [self.cacelView removeConstraint:self.wdithCacelBtn];
+    //接下来通过代码添加一个约束
+    [self.cacelView addConstraint:[NSLayoutConstraint constraintWithItem:
+       self.cacelView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:wdith]];
+    //最后使用layoutifneeded方法来从新定义约束，并且产生动画
+    //[self.view layoutIfNeeded];
+    
+    [super viewWillAppear:animated];
+}
+
+//准备提交意见反馈
+-(void)submitAdvice:(id)sender{
+    NSString *content=self.textView.text;
+    if([placeContent isEqualToString:content]||[content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length==0){
+        [UtilTool ShowAlertView:ALERT_WARN_TITLE setMsg:errorContent];
+        return;
+    }
+    
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSDictionary *user = [[userDic objectForKey:@"user"] objectAtIndex:0];
+    NSString *createUserId= [user objectForKey:@"id"];
+    
+    NSMutableString *json=[NSMutableString stringWithFormat:@"{'content':'%@','createUserId':%@,'token':'%@'}",content,createUserId,[UtilTool getToken]];
+    
+    waitView =[[UIWaitView alloc]init:self.view.frame];
+    [self.view addSubview:waitView];
+    [waitView.aiv startAnimating];
+    [self performSelector:@selector(saveAdvice:) withObject:json afterDelay:0.5];
+}
+//提交意见反馈
+-(void)saveAdvice:(NSString *)json{
+    NSMutableString *url=[NSMutableString stringWithFormat:@"%@%@",[UtilTool getHostURL],@"manager/feedback/save?"];
+    [url appendFormat:@"json=%@",json];
+    NSNumber *state;
+    json=[UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodPost isReload:YES status:&state];
+    
+    SBJsonParser *parser=[[SBJsonParser alloc]init];
+    NSDictionary *dic =[parser objectWithString:json];
+    
+    if([[dic objectForKey:@"status"]intValue]==500){
+        [UtilTool ShowAlertView:ALERT_WARN_TITLE setMsg:[dic objectForKey:@"msg"]];
+    }else{
+        [UtilTool ShowAlertView:ALERT_WARN_TITLE setMsg:ALERT_SAVE_SUCCESSMSG];
+    }
+    [waitView.aiv stopAnimating];
+    [waitView removeFromSuperview];
+}
+//取消
+-(void)cacelAdvice:(id)sender{
+    [self.textView setText:@""];
+}
+
+//---------------------------textView代理开始----------------------------
+-(void)textViewDidBeginEditing:(UITextView *)tView{
+    if([placeContent isEqualToString:tView.text])
+        [tView setText:@""];
+    CGRect frame = tView.frame;
+    int offset = frame.origin.y- (self.view.frame.size.height -220.0);
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >=7.0)
+        offset = frame.origin.y+155- (self.view.frame.size.height -220);
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyBoard"context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    if(offset > 0)
+    {
+        CGRect rect = CGRectMake(0.0f, -offset,width,height);
+        self.view.frame = rect;
+    }
+    [UIView commitAnimations];
+}
+
+-(void)textViewDidEndEditing:(UITextView *)tView{
+    if ([tView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].length==0) {
+        [tView setText:placeContent];
+    }
+    CGRect frame = tView.frame;
+    int offset = frame.origin.y- (self.view.frame.size.height -220);
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >=7.0)
+        offset = frame.origin.y+155- (self.view.frame.size.height -220);
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyBoard"context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    if(offset > 0)
+    {
+        CGRect rect = CGRectMake(0.0f, 0.0f,width,height);
+        self.view.frame = rect;
+    }
+    [UIView commitAnimations];
+    [tView resignFirstResponder];
+}
+
+-(BOOL)textView:(UITextView *)textV shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if([text isEqualToString:@"\n"]){
+        [textV resignFirstResponder];
+    }
+    return YES;
+}
+//---------------------------textView代理结束----------------------------
+//隐藏键盘
+-(void)BackGroundTag:(id)sender{
+    [self.textView resignFirstResponder];
+}
+
+@end

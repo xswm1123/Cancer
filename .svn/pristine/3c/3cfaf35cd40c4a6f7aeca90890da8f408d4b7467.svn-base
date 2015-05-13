@@ -1,0 +1,61 @@
+//
+//  ViewController.m
+//  Cancer
+//
+//  Created by hu su on 14-10-13.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "ViewController.h"
+#import "UtilTool.h"
+
+@interface ViewController ()
+
+@end
+
+@implementation ViewController
+@synthesize logoImage=_logoImage;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    curPage = 1;
+    showTimes=0;
+   
+    
+    self.logoImage.animationImages =@[[UIImage imageNamed:@"firstPageLogo1.png"],[UIImage imageNamed:@"firstPageLogo2.png"],[UIImage imageNamed:@"firstPageLogo3.png"]];
+    
+    [UIView setAnimationDelegate:self];
+    self.logoImage.animationDuration = 0.25f;
+    self.logoImage.animationRepeatCount = 9;
+    [self.logoImage startAnimating];
+    [self performSelector:@selector(goRootNav) withObject:nil afterDelay:3.0];
+    
+    
+    
+//    curTimer = [NSTimer scheduledTimerWithTimeInterval:0.10 target:self selector:@selector(playAnimate) userInfo:nil repeats:YES];
+    
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)goRootNav{
+
+    NSDictionary *user = [UtilTool getUserDic];
+
+    if(user) {
+        
+        [self performSegueWithIdentifier:@"gotoRootNav" sender:nil];
+        
+    }else{
+        [self performSegueWithIdentifier:@"login" sender:nil];
+    }
+    
+}
+
+
+
+@end

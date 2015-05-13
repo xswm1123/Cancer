@@ -1,0 +1,13 @@
+//
+//  WorkReportListViewController.h
+//  Cancer
+//
+//  Created by hu su on 14/10/21.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface WorkReportListViewController : UIViewController
+
+@end

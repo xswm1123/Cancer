@@ -1,0 +1,54 @@
+//
+//  SetViewController.m
+//  Cancer
+//
+//  Created by Parsec on 14-11-3.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "SetViewController.h"
+#import "LoginViewController.h"
+
+#import "Constants.h"
+#import "UtilTool.h"
+#import "ViewController.h"
+
+@implementation SetViewController
+
+-(void)viewDidLoad{
+    self.navigationController.navigationBar.barTintColor=[UtilTool colorWithHexString:@"16b7e5"];
+    self.navTitle=SET_VC_TITLE;
+    
+    self.hideRightBut=true;
+    self.leftImage = [UIImage imageNamed:@"clientVersionBut.png"];
+    self.leftImageRect = CGRectMake(0, 0, 83, 39);
+    
+    [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:self];
+}
+
+-(IBAction)exit:(id)sender
+{
+//    NSArray *arr  = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentPath = [arr objectAtIndex:0];
+    //删除用户信息文件
+
+    NSMutableDictionary *userDic = [[UtilTool getUserDic] mutableCopy];
+    if(userDic){
+        userDic[@"notAuto"] = @(YES);
+    }
+
+    [UtilTool saveUserDic:userDic];
+
+    ViewController *viewController = (ViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+
+    [[[UIApplication sharedApplication] keyWindow] setRootViewController:viewController];
+
+
+
+}
+
+@end

@@ -1,0 +1,1254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="cb6d28fe-86b5-4749-a248-aff7c90410e7" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Cancer.xcodeproj/project.xcworkspace/xcuserdata/husu.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/Cancer.xcodeproj/project.xcworkspace/xcuserdata/husu.xcuserdatad/UserInterfaceState.xcuserstate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Cancer/FirstPageItemCell.xib" afterPath="$PROJECT_DIR$/Cancer/FirstPageItemCell.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Cancer/FirstViewController.m" afterPath="$PROJECT_DIR$/Cancer/FirstViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Cancer/Base.lproj/Main.storyboard" afterPath="$PROJECT_DIR$/Cancer/Base.lproj/Main.storyboard" />
+    </list>
+    <list id="ca9d92c6-0860-4861-8bf6-2efa6e2cdbf0" name="New changelist" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
+    <ignored path="Cancer.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_iPhone_5s_7.1_x86_64_1" />
+  <component name="FavoritesManager">
+    <favorites_list name="Cancer" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="FirstViewController.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/FirstViewController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.962963" vertical-offset="11299" max-vertical-offset="18015">
+              <caret line="773" column="9" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
+              <folding>
+                <element signature="e#134#165#0" expanded="true" />
+                <element signature="e#601#632#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="eye.png" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/images/eye.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KnowledgeDetailViewController.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeDetailViewController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="483" max-vertical-offset="5085">
+              <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KnowledgeViewController.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeViewController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3656" max-vertical-offset="9705">
+              <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InSideMsgDetailViewController.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/InSideMsgDetailViewController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-48.88889" vertical-offset="0" max-vertical-offset="1545">
+              <caret line="96" column="26" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InSideMsgViewController.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/InSideMsgViewController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-61.925926" vertical-offset="533" max-vertical-offset="3690">
+              <caret line="156" column="5" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
+              <folding>
+                <element signature="e#455#490#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomUILabel.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/custom/CustomUILabel.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="1425">
+              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/main.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="330">
+              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewController.m" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Cancer/ViewController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.33333334" vertical-offset="430" max-vertical-offset="1440">
+              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SetViewController.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cancer/SetViewController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="915">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="true" />
+    </FindUsagesManager>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Cancer/custom/CustomTabBarController.h" />
+        <option value="$PROJECT_DIR$/Cancer/custom/UIWaitView.h" />
+        <option value="$PROJECT_DIR$/Cancer/WorkReportListViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/FirstPageCellHeader.xib" />
+        <option value="$PROJECT_DIR$/Cancer/FirstPageCellHeaderView.h" />
+        <option value="$PROJECT_DIR$/Cancer/FirstPageCellHeaderView.m" />
+        <option value="$PROJECT_DIR$/Cancer/FirstPageItemCell.h" />
+        <option value="$PROJECT_DIR$/Cancer/InSideMsgViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CommonTableView.h" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CustomSelectView.m" />
+        <option value="$PROJECT_DIR$/Cancer/BubbleView.h" />
+        <option value="$PROJECT_DIR$/Cancer/CheckVIewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/custom/UIWaitView.m" />
+        <option value="$PROJECT_DIR$/Cancer/common/Stack.h" />
+        <option value="$PROJECT_DIR$/Cancer/common/Stack.m" />
+        <option value="$PROJECT_DIR$/Cancer/common/DownloadManager.h" />
+        <option value="$PROJECT_DIR$/Cancer/common/DownloadManager.m" />
+        <option value="$PROJECT_DIR$/Cancer/ReadAttachOnLineViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/KnowledgeDetailViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/ReadAttachOnLineViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CommonViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/KnowledgeFolderCell.h" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CommonViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/WorkReportDetailViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CustomUILabel.h" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CustomUILabel.m" />
+        <option value="$PROJECT_DIR$/Cancer/FirstPageItemCell.m" />
+        <option value="$PROJECT_DIR$/Cancer/KnowledgeDetailViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/KnowledgeViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/LoginViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/SetViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CommonTableView.m" />
+        <option value="$PROJECT_DIR$/Cancer/common/UtilTool.h" />
+        <option value="$PROJECT_DIR$/Cancer/common/UtilTool.m" />
+        <option value="$PROJECT_DIR$/Cancer/FirstViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/custom/CustomTabBarController.m" />
+        <option value="$PROJECT_DIR$/Cancer/InSideMsgDetailViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/LoginViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/ContactsViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/WorkReportListViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/AttenceViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/AddReportViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/AddReportViewController.h" />
+        <option value="$PROJECT_DIR$/Cancer/Base.lproj/Main.storyboard" />
+        <option value="$PROJECT_DIR$/Cancer/host.plist" />
+        <option value="$PROJECT_DIR$/Cancer/ViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/InSideMsgViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/KnowledgeViewController.m" />
+        <option value="$PROJECT_DIR$/Cancer/FirstViewController.m" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1680" />
+    <option name="height" value="965" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>C/C++</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Cidr.FilesView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Cancer" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../cruxIOS" />
+    <property name="recentsLimit" value="5" />
+    <property name="OBJC.PRESERVED_TARGET_SELECTION" value="Cancer" />
+    <property name="FullScreen" value="false" />
+    <property name="options.lastSelected" value="appearance" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///code/Cancer/Cancer/LoginViewController.h" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="102" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="113" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="115" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="75" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="133" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="902" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="103" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="114" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="116" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="102" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="103" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="902" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+  </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="svn" revision="4600">$PROJECT_DIR$/Cancer/SysViewController.m</PATH>
+            <PATH vcs="svn" revision="4600">$PROJECT_DIR$/Cancer/PwdController.m</PATH>
+            <PATH vcs="svn" revision="4600">$PROJECT_DIR$/Cancer/SysViewController.h</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+          <PATH vcs="svn" revision="4600">$PROJECT_DIR$/Cancer/Base.lproj/Main.storyboard</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
+  <component name="RunManager" selected="Application.Cancer">
+    <configuration default="true" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Cancer" TARGET_NAME="Cancer" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Cancer" RUN_TARGET_NAME="Cancer" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
+      <envs />
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <method />
+    </configuration>
+    <configuration default="true" type="OCUnitRunConfiguration" factoryName="XCTest/Kiwi" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Cancer" TARGET_NAME="CancerTests" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="XSLT" factoryName="XSLT">
+      <option name="myOutputFile" />
+      <option name="myOpenOutputFile" value="false" />
+      <option name="myOpenInBrowser" value="false" />
+      <option name="mySmartErrorHandling" value="true" />
+      <option name="myRunnerPort" value="34873" />
+      <option name="myVmArguments" />
+      <option name="myWorkingDirectory" />
+      <option name="myModule" />
+      <option name="myJdk" />
+      <parameters />
+      <OutputType value="CONSOLE" save-to-file="false" />
+      <FileType name="XML" />
+      <JdkChoice value="FROM_MODULE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="OCGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Cancer" TARGET_NAME="Cancer" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Cancer" type="AppleRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Cancer" TARGET_NAME="Cancer" CONFIG_NAME="Debug" SCHEME_NAME="Cancer" RUN_TARGET_PROJECT_NAME="Cancer" RUN_TARGET_NAME="Cancer" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
+      <envs />
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <RunnerSettings RunnerId="AppRunner" />
+      <RunnerSettings RunnerId="InstrumentsRunner" />
+      <ConfigurationWrapper RunnerId="AppRunner" />
+      <ConfigurationWrapper RunnerId="InstrumentsRunner" />
+      <method />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Application.SDWebImage" />
+      <item index="1" class="java.lang.String" itemvalue="Application.SDWebImage+MKAnnotation" />
+      <item index="2" class="java.lang.String" itemvalue="Application.SDWebImage+WebP" />
+      <item index="3" class="java.lang.String" itemvalue="Application.SDWebImageFramework" />
+      <item index="4" class="java.lang.String" itemvalue="Application.Cancer" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" myUseAcceleration="nothing" cleanupOnStartRun="true">
+    <configuration useDefault="false">$USER_HOME$/.subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cb6d28fe-86b5-4749-a248-aff7c90410e7" name="Default" comment="" />
+      <changelist id="ca9d92c6-0860-4861-8bf6-2efa6e2cdbf0" name="New changelist" comment="" />
+      <created>1413358881857</created>
+      <option name="number" value="Default" />
+      <updated>1413358881857</updated>
+    </task>
+    <task id="LOCAL-00001">
+      <created>1413871043121</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1413871043121</updated>
+    </task>
+    <task id="LOCAL-00002">
+      <created>1413884279103</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1413884279103</updated>
+    </task>
+    <task id="LOCAL-00003">
+      <created>1413889694103</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1413889694103</updated>
+    </task>
+    <task id="LOCAL-00004">
+      <created>1413994750104</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1413994750104</updated>
+    </task>
+    <task id="LOCAL-00005">
+      <created>1413994804103</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1413994804103</updated>
+    </task>
+    <task id="LOCAL-00006">
+      <created>1414137585121</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1414137585121</updated>
+    </task>
+    <task id="LOCAL-00007">
+      <created>1414312923123</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1414312923123</updated>
+    </task>
+    <task id="LOCAL-00008">
+      <created>1414394713116</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1414394713116</updated>
+    </task>
+    <task id="LOCAL-00009">
+      <created>1414497544104</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1414497544104</updated>
+    </task>
+    <task id="LOCAL-00010">
+      <created>1414497667102</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1414497667102</updated>
+    </task>
+    <task id="LOCAL-00011">
+      <created>1414549514103</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1414549514103</updated>
+    </task>
+    <task id="LOCAL-00012">
+      <created>1414746182113</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1414746182113</updated>
+    </task>
+    <task id="LOCAL-00013">
+      <created>1414752799104</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1414752799104</updated>
+    </task>
+    <task id="LOCAL-00014">
+      <created>1414762102104</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1414762102104</updated>
+    </task>
+    <task id="LOCAL-00015">
+      <created>1414853363111</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1414853363111</updated>
+    </task>
+    <task id="LOCAL-00016">
+      <created>1414935637113</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1414935637113</updated>
+    </task>
+    <task id="LOCAL-00017">
+      <created>1414936512105</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1414936512105</updated>
+    </task>
+    <task id="LOCAL-00018">
+      <created>1414994552104</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1414994552104</updated>
+    </task>
+    <task id="LOCAL-00019">
+      <created>1415079961104</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1415079961104</updated>
+    </task>
+    <task id="LOCAL-00020">
+      <created>1415622776115</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1415622776115</updated>
+    </task>
+    <task id="LOCAL-00021">
+      <created>1415622907103</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1415622907103</updated>
+    </task>
+    <task id="LOCAL-00022">
+      <created>1415679964110</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1415679964110</updated>
+    </task>
+    <task id="LOCAL-00023">
+      <created>1415684553117</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1415684553117</updated>
+    </task>
+    <task id="LOCAL-00024">
+      <created>1415684815104</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1415684815104</updated>
+    </task>
+    <task id="LOCAL-00025">
+      <created>1415684853102</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1415684853102</updated>
+    </task>
+    <task id="LOCAL-00026">
+      <created>1415686020103</created>
+      <option name="number" value="00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1415686020103</updated>
+    </task>
+    <task id="LOCAL-00027">
+      <created>1415686919111</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1415686919111</updated>
+    </task>
+    <task id="LOCAL-00028">
+      <created>1415708250105</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1415708250105</updated>
+    </task>
+    <task id="LOCAL-00029">
+      <created>1415874827104</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1415874827104</updated>
+    </task>
+    <task id="LOCAL-00030">
+      <created>1415878359104</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1415878359104</updated>
+    </task>
+    <task id="LOCAL-00031">
+      <created>1415936158103</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1415936158103</updated>
+    </task>
+    <task id="LOCAL-00032">
+      <created>1415950506104</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1415950506104</updated>
+    </task>
+    <task id="LOCAL-00033">
+      <created>1415952475104</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1415952475104</updated>
+    </task>
+    <task id="LOCAL-00034">
+      <created>1416034464111</created>
+      <option name="number" value="00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1416034464111</updated>
+    </task>
+    <task id="LOCAL-00035">
+      <created>1416223440113</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1416223440113</updated>
+    </task>
+    <task id="LOCAL-00036">
+      <created>1416301436133</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1416301436133</updated>
+    </task>
+    <task id="LOCAL-00037">
+      <created>1416301722103</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1416301722103</updated>
+    </task>
+    <task id="LOCAL-00038">
+      <created>1416302043104</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1416302043104</updated>
+    </task>
+    <task id="LOCAL-00039">
+      <created>1416302058102</created>
+      <option name="number" value="00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1416302058102</updated>
+    </task>
+    <task id="LOCAL-00040">
+      <created>1416306092123</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1416306092123</updated>
+    </task>
+    <task id="LOCAL-00041">
+      <created>1416369655105</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1416369655105</updated>
+    </task>
+    <task id="LOCAL-00042">
+      <created>1416370207105</created>
+      <option name="number" value="00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1416370207105</updated>
+    </task>
+    <task id="LOCAL-00043">
+      <created>1416968608105</created>
+      <option name="number" value="00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1416968608105</updated>
+    </task>
+    <task id="LOCAL-00044">
+      <created>1417188915113</created>
+      <option name="number" value="00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1417188915113</updated>
+    </task>
+    <task id="LOCAL-00045">
+      <created>1417508072106</created>
+      <option name="number" value="00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1417508072106</updated>
+    </task>
+    <task id="LOCAL-00046">
+      <created>1417508190106</created>
+      <option name="number" value="00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1417508190106</updated>
+    </task>
+    <task id="LOCAL-00047">
+      <created>1417592576102</created>
+      <option name="number" value="00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1417592576102</updated>
+    </task>
+    <task id="LOCAL-00048">
+      <created>1417761114103</created>
+      <option name="number" value="00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1417761114103</updated>
+    </task>
+    <task id="LOCAL-00049">
+      <created>1417761135104</created>
+      <option name="number" value="00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1417761135104</updated>
+    </task>
+    <task id="LOCAL-00050">
+      <created>1418022115113</created>
+      <option name="number" value="00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1418022115115</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
+    <servers />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1680" height="965" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32857144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36245573" sideWeight="0.4996986" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286219" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17520049" sideWeight="0.5009242" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262662" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3133098" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32979977" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24954791" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17129071" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290993" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32896304" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39905548" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="248" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeFolderCell.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeFolderCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeDetailViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <caret line="31" column="36" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1590" max-vertical-offset="6825">
+          <caret line="119" column="11" selection-start-line="119" selection-start-column="11" selection-end-line="119" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/custom/CommonViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5384614" vertical-offset="174" max-vertical-offset="2025">
+          <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="appcode.project-settings://fe9c9573">
+      <provider selected="true" editor-type-id="AppCode.ProjectSettings">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/ReadAttachOnLineViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/ReadAttachOnLineViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1260">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include/math.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="10077" max-vertical-offset="11145">
+          <caret line="691" column="8" selection-start-line="691" selection-start-column="8" selection-end-line="691" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIView.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3732" max-vertical-offset="9090">
+          <caret line="267" column="8" selection-start-line="267" selection-start-column="8" selection-end-line="267" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/InSideMsgDetailViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/FirstPageItemCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="31" max-vertical-offset="480">
+          <caret line="22" column="60" selection-start-line="22" selection-start-column="60" selection-end-line="22" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/FirstPageItemCell.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.444445" vertical-offset="0" max-vertical-offset="720">
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/LoginViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="31" max-vertical-offset="585">
+          <caret line="12" column="69" selection-start-line="12" selection-start-column="69" selection-end-line="12" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/images/pic.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/custom/CommonTableView.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1875" max-vertical-offset="2580">
+          <caret line="125" column="49" selection-start-line="125" selection-start-column="49" selection-end-line="125" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/common/UtilTool.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1002" max-vertical-offset="3285">
+          <caret line="86" column="13" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33292684" vertical-offset="2787" max-vertical-offset="8175">
+          <caret line="209" column="8" selection-start-line="209" selection-start-column="8" selection-end-line="209" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/custom/CustomTabBarController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="758" max-vertical-offset="1590">
+          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/ContactsViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="3195">
+          <caret line="78" column="81" selection-start-line="78" selection-start-column="81" selection-end-line="78" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/LoginViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3044" max-vertical-offset="5640">
+          <caret line="251" column="0" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/WorkReportDetailViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="190" max-vertical-offset="2580">
+          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/AddReportViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="37" max-vertical-offset="6285">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/Base.lproj/Main.storyboard">
+      <provider selected="true" editor-type-id="appcode-designer">
+        <state ui-designer-zoom="1.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/AddReportViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="930">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/PwdController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1785">
+          <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/AttenceViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4383" max-vertical-offset="5235">
+          <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/WorkReportListViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="175" max-vertical-offset="1065">
+          <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/WorkReportListViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2250" max-vertical-offset="7755">
+          <caret line="176" column="4" selection-start-line="176" selection-start-column="4" selection-end-line="176" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/host.plist">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/FirstViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="156" max-vertical-offset="975">
+          <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/custom/CustomUILabel.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/common/UtilTool.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9161" max-vertical-offset="9750">
+          <caret line="624" column="25" selection-start-line="624" selection-start-column="25" selection-end-line="624" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/custom/PagePhotosView.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3356" max-vertical-offset="3930">
+          <caret line="238" column="0" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIApplication.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6986" max-vertical-offset="8205">
+          <caret line="483" column="17" selection-start-line="483" selection-start-column="17" selection-end-line="483" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFRunLoop.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="716" max-vertical-offset="2790">
+          <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/CALayer.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8711" max-vertical-offset="12300">
+          <caret line="594" column="8" selection-start-line="594" selection-start-column="8" selection-end-line="594" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include/objc/NSObject.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="176" max-vertical-offset="1650">
+          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFArray.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35281837" vertical-offset="5621" max-vertical-offset="10185">
+          <caret line="386" column="5" selection-start-line="386" selection-start-column="5" selection-end-line="386" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework/Headers/UILabel.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.62212944" vertical-offset="452" max-vertical-offset="960">
+          <caret line="54" column="10" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/SetViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="840">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/custom/CustomUILabel.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="716" max-vertical-offset="1395">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/main.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/InSideMsgDetailViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-48.88889" vertical-offset="0" max-vertical-offset="1545">
+          <caret line="96" column="26" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/InSideMsgViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-61.925926" vertical-offset="533" max-vertical-offset="3690">
+          <caret line="156" column="5" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
+          <folding>
+            <element signature="e#455#490#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeDetailViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="483" max-vertical-offset="5085">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/KnowledgeViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3656" max-vertical-offset="9705">
+          <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/images/eye.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/FirstViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.962963" vertical-offset="11299" max-vertical-offset="18015">
+          <caret line="773" column="9" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
+          <folding>
+            <element signature="e#134#165#0" expanded="true" />
+            <element signature="e#601#632#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Cancer/ViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="430" max-vertical-offset="1440">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

@@ -1,0 +1,217 @@
+//
+//  LoginViewController.m
+//  Cancer
+//
+//  Created by hu su on 14-10-15.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "LoginViewController.h"
+#import "UtilTool.h"
+#import "SBJson.h"
+#import "UIWaitView.h"
+
+@interface LoginViewController ()
+
+@end
+
+@implementation LoginViewController {
+
+}
+
+@synthesize tabView = _tabView;
+
+@synthesize tab1 = _tab1;
+
+@synthesize tab2 = _tab2;
+
+@synthesize colorArray = _colorArray;
+
+@synthesize txtMobile = _txtMobile;
+@synthesize txtPwd = _txtPwd;
+@synthesize loginBut = _loginBut;
+@synthesize remenberView = _remenberView;
+@synthesize checkBoxImageView = _checkBoxImageView;
+
+@synthesize remenbered = _remenbered;
+
+@synthesize curSelectedTabIndex = _curSelectedTabIndex;
+
+@synthesize waitView = _waitView;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.remenbered = NO;
+
+    self.colorArray = @[@"196798",@"16b7e5"];
+
+    self.tab1.backgroundColor = [UtilTool colorWithHexString:[self.colorArray objectAtIndex:0] ];
+    self.tab2.backgroundColor = [UtilTool colorWithHexString:[self.colorArray objectAtIndex:1]];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTabView:)];
+
+    [self.tabView addGestureRecognizer:tapGestureRecognizer];
+
+
+    self.tabView.userInteractionEnabled = YES;
+
+
+
+    UITapGestureRecognizer *checkTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCheckView:)];
+    self.remenberView.userInteractionEnabled = YES;
+
+    [self.remenberView addGestureRecognizer:checkTap];
+
+
+    UITapGestureRecognizer *loginButTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loaginButTap:)];
+    self.loginBut.userInteractionEnabled = YES;
+    [self.loginBut addGestureRecognizer:loginButTap];
+
+
+    self.curSelectedTabIndex = 0;
+
+}
+
+/**
+* 点击登录按钮
+*/
+-(void)loaginButTap:(UITapGestureRecognizer *)tapGesture{
+    [self.txtMobile resignFirstResponder];
+    [self.txtPwd resignFirstResponder];
+
+
+    self.waitView = [[UIWaitView alloc] init];
+    [self.waitView.aiv startAnimating];
+    [self.view addSubview:self.waitView];
+
+    self.loginBut.alpha = 0.5f;
+    [self performSelector:@selector(doLogin) withObject:nil afterDelay:0.2];
+}
+
+/**
+* 执行登录
+*/
+-(void)doLogin{
+
+
+    if(self.curSelectedTabIndex==0) { //处理本系统登录
+
+        self.loginBut.alpha = 1.0f;
+
+        NSString *mobile = self.txtMobile.text;
+        NSString *pwd = self.txtPwd.text;
+
+
+        if (!(mobile && [mobile length] > 0)) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"手机号码不可为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+
+            [self.waitView stopAnimating];
+            [self.waitView removeFromSuperview];
+
+            return;
+        }
+
+        if (!(pwd && [pwd length] > 0)) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"密码不可为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+
+            [self.waitView stopAnimating];
+            [self.waitView removeFromSuperview];
+            return;
+        }
+
+        NSString *url = [NSString stringWithFormat:@"%@manager/login", [UtilTool getHostURL]];
+
+
+
+        NSString *jsonString = [NSString stringWithFormat:@"json={'account':'%@','password':'%@'}",mobile,pwd];
+
+
+        NSNumber *status;
+        NSString *userJSONString = [UtilTool sendUrlRequestByCache:url paramValue:jsonString method:HTTPRequestMethodGet isReload:NO status:&status];
+
+
+        [self.waitView stopAnimating];
+        [self.waitView removeFromSuperview];
+
+        if(status.integerValue==2){
+
+            if(userJSONString && [userJSONString length]>0){
+                SBJsonParser *parser  = [[SBJsonParser alloc] init];
+                NSDictionary *userDic  = [parser objectWithString:userJSONString];
+
+                if(!userDic || [[userDic objectForKey:@"status"] isEqual:@"1"]){
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:@"登录名或密码错误,请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alertView show];
+                    return;
+                }
+
+
+                if(self.remenbered){
+                    [UtilTool saveUserDic:userDic];
+
+                }
+
+                [self performSegueWithIdentifier:@"login2Main" sender:self];
+
+            }
+
+        }
+
+
+
+    }else{ //处理ESOP登录
+
+    }
+
+}
+
+/**
+* 点击选项卡
+*/
+
+-(void)tapTabView:(UITapGestureRecognizer *)gesture{
+    CGPoint point =  [gesture locationInView:self.tabView];
+    CGFloat totalWidth = self.tabView.frame.size.width;
+    int x = point.x/(totalWidth/2);
+
+
+        self.tab1.backgroundColor = [UtilTool colorWithHexString:[self.colorArray objectAtIndex:(x==0?0:1)]];
+        self.tab2.backgroundColor = [UtilTool colorWithHexString:[self.colorArray objectAtIndex:x==0?1:0]];
+
+    self.curSelectedTabIndex =  x;
+
+}
+
+/**
+* 点击是否记住密码checkbox
+*/
+-(void)tapCheckView:(UITapGestureRecognizer *)tapGestureRecognizer{
+    if(self.remenbered){
+        self.checkBoxImageView.image = [UIImage imageNamed:@"checkbox.png"];
+        self.remenbered = NO;
+    } else{
+        self.checkBoxImageView.image = [UIImage imageNamed:@"checkedbox.png"];
+        self.remenbered = YES;
+    }
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

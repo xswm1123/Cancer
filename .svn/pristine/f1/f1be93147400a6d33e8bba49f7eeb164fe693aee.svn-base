@@ -1,0 +1,29 @@
+//
+//  WorkReportDetailViewController.h
+//  Cancer
+//
+//  Created by zpj on 14/10/31.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "CommonViewController.h"
+#import "UtilTool.h"
+#import "SBJsonParser.h"
+
+@interface WorkReportDetailViewController : CommonViewController
+
+@property(strong, nonatomic) IBOutlet UILabel *reportTitle;
+
+@property(strong, nonatomic) IBOutlet UIScrollView *recScroll;
+
+@property(strong, nonatomic) IBOutlet UIScrollView *ccScroll;
+
+@property(strong, nonatomic) IBOutlet UILabel *sendTime;
+
+@property(strong, nonatomic) IBOutlet UILabel *reportUser;
+
+@property(strong, nonatomic) IBOutlet UITextView *content;
+
+@property(strong, nonatomic) NSDictionary *dict;
+
+@end

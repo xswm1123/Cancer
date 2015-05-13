@@ -1,0 +1,53 @@
+//
+//  AddReportViewController.h
+//  Cancer
+//
+//  Created by zpj on 14/10/31.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "CommonViewController.h"
+#import "UIWaitView.h"
+#import "UtilTool.h"
+#import "SBJsonParser.h"
+#import "ContactsViewController.h"
+
+@interface AddReportViewController : CommonViewController<UITextViewDelegate>
+
+@property(nonatomic, strong) IBOutlet UITextField *reportTitle;
+
+@property(nonatomic, strong) IBOutlet UITextView *reportContent;
+
+@property(nonatomic, strong) IBOutlet UIScrollView *recScrollView;//接收人
+
+@property(nonatomic, strong) NSMutableArray *recArray;
+
+@property(nonatomic, strong) IBOutlet UIScrollView *ccScrollView;//抄送人
+
+@property(nonatomic, strong) NSMutableArray *ccArray;
+
+@property(nonatomic, strong) IBOutlet UIView *reportView;
+
+@property(nonatomic, strong) IBOutlet UIView * enterBtn;
+
+@property(nonatomic, strong) IBOutlet UIView * cancelBtn;
+
+@property(nonatomic, strong) IBOutlet NSLayoutConstraint *topConstraint;
+
+@property(nonatomic, strong) UIWaitView *waitView;
+
+@property Boolean isReciver;
+
+-(IBAction)enterClick:(id)sender;
+
+-(IBAction)cancelClick:(id)sender;
+
+-(IBAction)recBtnClick:(id)sender;
+
+-(IBAction)ccBtnClick:(id)sender;
+
+-(void)addReport;
+
+-(void)updateContacts;
+
+@end

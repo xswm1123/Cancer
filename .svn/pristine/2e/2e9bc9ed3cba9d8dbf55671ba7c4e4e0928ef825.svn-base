@@ -1,0 +1,24 @@
+//
+//  KnowledgeViewController.h
+//  Cancer
+//
+//  Created by hu su on 14/10/31.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "CommonViewController.h"
+
+@class UIWaitView;
+
+@interface KnowledgeViewController : CommonViewController<UITableViewDelegate,UITableViewDataSource>{
+
+    NSString *curIndexListUrl;
+}
+
+@property (nonatomic, strong) IBOutlet UITableView *myTableView;
+@property (nonatomic, strong) NSArray *folderArray;
+
+
+@property (nonatomic, strong) UIWaitView *waitView;
+@property NSInteger pageNo;
+@end

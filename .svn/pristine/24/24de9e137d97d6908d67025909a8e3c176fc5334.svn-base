@@ -1,0 +1,36 @@
+//
+//  FirstViewController.h
+//  Cancer
+//
+//  Created by hu su on 14/10/21.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "CommonViewController.h"
+#import "PagePhotosDataSource.h"
+
+@class UIWaitView;
+@class PagePhotosView;
+
+@interface FirstViewController : CommonViewController<UITableViewDataSource,UITableViewDelegate,PagePhotosDataSource>{
+    NSString *curIndexListUrl;
+    NSString *curAdUrl;
+    NSArray *colorArry;
+    NSArray *imageArray;
+}
+@property (nonatomic, strong) IBOutlet UITableView *myTable;
+@property (nonatomic, strong) IBOutlet UIView *msgNoticeView;
+@property (nonatomic, strong) IBOutlet UILabel *movingMsgLabel;
+
+@property (nonatomic, strong) NSMutableDictionary *firstPageDataDic;
+
+@property (nonatomic, strong) NSArray *adArray;
+@property (nonatomic, strong) UIWaitView *waitView;
+@property (nonatomic, strong) PagePhotosView *advertiseView;
+
+
+@property (nonatomic, strong) NSArray *msgArray;
+
+
+@end

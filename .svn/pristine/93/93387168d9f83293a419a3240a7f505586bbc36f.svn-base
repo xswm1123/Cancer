@@ -1,0 +1,345 @@
+//
+//  KnowledgeViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/10/31.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "KnowledgeViewController.h"
+#import "KnowledgeFolderCell.h"
+#import "UIWaitView.h"
+#import "SBJsonParser.h"
+#import "UtilTool.h"
+#import "UIImageView+WebCache.h"
+#import "Stack.h"
+#import "KnowledgeDetailViewController.h"
+
+@implementation KnowledgeViewController
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+@synthesize myTableView = _myTableView;
+@synthesize folderArray = _folderArray;
+
+
+@synthesize waitView = _waitView;
+
+@synthesize pageNo = _pageNo;
+
+@synthesize totalPage = _totalPage;
+
+@synthesize curParentNo = _curParentNo;
+
+
+@synthesize preParentStack = _preParentStack;
+
+- (void)viewDidLoad {
+
+    self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    self.hideRightBut = YES;
+
+    self.pageNo = 1;
+
+    self.preParentStack = [[Stack alloc] init];
+
+
+    self.curParentNo = 0;
+    [super viewDidLoad];
+}
+
+
+
+- (void)viewWillAppear:(BOOL)animated {
+
+
+
+    [super viewWillAppear:animated];
+    self.waitView = [[UIWaitView alloc] init:self.view.frame];
+
+
+    [self.waitView.aiv startAnimating];
+    [self.view addSubview:self.waitView];
+
+
+    NSNumber *parentNum = @(self.curParentNo);
+    [self performSelector:@selector(initData:) withObject:parentNum afterDelay:0.5];
+
+}
+
+-(void)initData:(NSNumber *) parentId{
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSString *token = userDic[@"token"];
+
+    //读取首页数据
+
+    self.curParentNo= (NSUInteger) [parentId integerValue];
+
+
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@manager/professionKnowledge/list?json={'token':'%@','parentId':%d,'pageIndex':%d,'pageSize':15}", [UtilTool getHostURL], token, parentId.integerValue, self.pageNo];
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodGet isReload:NO status:&status];
+
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        NSDictionary *curDic = [parser objectWithString:jsonString];
+        if(curDic){
+            self.folderArray = curDic[@"list"];
+            self.totalPage = [curDic[@"totalPage"] integerValue];
+        }
+    }
+
+    //如果是从缓存中读取的，则后台启动一个线程读取网络数据
+
+    if([status intValue]==3){
+        curIndexListUrl = url;
+        [NSThread detachNewThreadSelector:@selector(visitIndexUrlBackground) toTarget:self withObject:nil];
+    }
+
+
+    [self reloadTableView];
+
+    [self.waitView stopAnimating];
+    [self.waitView removeFromSuperview];
+}
+
+-(void)visitIndexUrlBackground{
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:curIndexListUrl paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&status];
+
+
+
+    //如果是从缓存中读取的，则后台启动一个线程读取网络数据
+
+    if([status intValue]==2){
+        SBJsonParser *parser = [[SBJsonParser alloc] init];
+        if(jsonString && [jsonString length]>0){
+            NSDictionary *curDic = [parser objectWithString:jsonString];
+            if(curDic){
+                self.folderArray = curDic[@"list"];
+                self.totalPage = [curDic[@"totalPage"] integerValue];
+            }
+        }
+        [NSThread detachNewThreadSelector:@selector(reloadTableView) toTarget:self withObject:nil];
+    }
+}
+
+-(void)reloadTableView{
+    [self.myTableView reloadData];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+
+    NSInteger rowNum = [self.folderArray count];
+
+    if (self.pageNo < self.totalPage) {
+        rowNum++;
+    }
+
+    if(self.curParentNo!=0){
+        rowNum++;
+    }
+
+    return rowNum;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+
+    //返回上一级的cell
+
+    NSInteger moreLabelRow = [self.folderArray count]; //计算"更多"单元格出现的位置
+
+    if(self.curParentNo!=0){
+
+        moreLabelRow++;
+
+        if([indexPath row]==0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"returnCell"];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"returnCell"];
+            }
+
+            cell.textLabel.text = @"返回上级";
+            if(isPad){
+                cell.textLabel.font = [UtilTool currentSystemFont:18.0f];
+
+            }else{
+                cell.textLabel.font = [UtilTool currentSystemFont:14.0f];
+            }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+            cell.tag = 1001;
+            return cell;
+        }
+    }
+
+
+
+    if(self.pageNo<self.totalPage && [indexPath row]>moreLabelRow)
+    {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"moreLabel"];
+        cell.textLabel.text = @" 更 多 " ;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        if(isPad){
+            cell.textLabel.font = [UtilTool currentSystemFont:18.0f];
+
+        }else{
+            cell.textLabel.font = [UtilTool currentSystemFont:14.0f];
+
+        }
+
+        cell.tag = 1002;
+
+        return cell;
+
+    }
+
+
+
+
+    NSInteger curIndex = [indexPath row];
+    if(self.curParentNo!=0){
+        curIndex--;
+    }
+
+    KnowledgeFolderCell *cell =(KnowledgeFolderCell *) [tableView dequeueReusableCellWithIdentifier:@"knowledgeFolder"];
+
+    NSDictionary *kDic = (self.folderArray)[(NSUInteger) curIndex];
+
+    cell.folderLabel.text = kDic[@"name"];
+
+    cell.timeLabel.text = kDic[@"createDate"];
+
+
+    cell.tag =1003;
+
+
+
+
+    if([kDic[@"isParent"] boolValue]){
+
+        CGFloat height = 50 * self.myTableView.frame.size.width/320;
+        CGFloat width = 50 * self.myTableView.frame.size.width/320;
+
+        for(NSLayoutConstraint *constraint in cell.iconImageView.constraints){
+            if(constraint.firstAttribute==NSLayoutAttributeHeight){
+                constraint.constant = height;
+            }
+            if(constraint.firstAttribute == NSLayoutAttributeWidth){
+                constraint.constant = width;
+            }
+        }
+
+        cell.iconImageView.image = [UIImage imageNamed:@"folder.png"];
+    }else{
+        CGFloat  width= (120/2) * self.myTableView.frame.size.width/320;
+        CGFloat height = (80/2) * self.myTableView.frame.size.width/320;
+
+        for(NSLayoutConstraint *constraint in cell.iconImageView.constraints){
+            if(constraint.firstAttribute==NSLayoutAttributeHeight){
+                constraint.constant = height;
+            }
+            if(constraint.firstAttribute == NSLayoutAttributeWidth){
+                constraint.constant = width;
+            }
+        }
+
+        [cell.iconImageView setImageWithURL:[NSURL URLWithString:kDic[@"showImageUrl"]] placeholderImage:[UIImage imageNamed:@"noPicIconRect.png"]];
+    }
+
+
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+
+
+
+    if(cell.tag==1001){ //返回上一级
+
+        self.waitView = [[UIWaitView alloc] init:self.view.frame];
+        [self.waitView.aiv startAnimating];
+        [self.view addSubview:self.waitView];
+
+        NSNumber *level = [self.preParentStack pop];
+       [self performSelector:@selector(initData:) withObject:level afterDelay:0.5];
+
+    }else if(cell.tag==1002){//更多
+
+        self.waitView = [[UIWaitView alloc] init:self.view.frame];
+        [self.waitView.aiv startAnimating];
+        [self.view addSubview:self.waitView];
+
+
+        NSLog(@"====");
+    }else{ //点击条目
+        NSInteger curIndex = [indexPath row];
+        if(self.curParentNo!=0){ // 不是最上层目录
+            curIndex--;
+        }
+
+        NSDictionary *kDic = self.folderArray[(NSUInteger)curIndex];
+        if([kDic[@"isParent"] boolValue]){ //是文件夹
+
+            self.waitView = [[UIWaitView alloc] init:self.view.frame];
+            [self.waitView.aiv startAnimating];
+            [self.view addSubview:self.waitView];
+
+            [self.preParentStack push:@(self.curParentNo)];
+            self.curParentNo = 1;
+
+            [self performSelector:@selector(initData:) withObject:kDic[@"id"] afterDelay:0.5];
+        }else{
+
+
+
+
+
+            [self performSegueWithIdentifier:@"knowledgeList2Detail" sender:kDic];
+
+        }
+
+    }
+
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"knowledgeList2Detail"]){
+        KnowledgeDetailViewController *kdvc = (KnowledgeDetailViewController *)segue.destinationViewController;
+        kdvc.kid = [sender[@"id"] integerValue] ;
+        kdvc.createTime = sender[@"createDate"];
+
+    }
+}
+
+
+-(void)loadNextPage:(NSNumber *)pageNO{
+
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 60.0f;
+
+    return height * self.myTableView.frame.size.width/320;
+}
+
+
+- (void)clickBack:(UITapGestureRecognizer *)gesture {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+@end

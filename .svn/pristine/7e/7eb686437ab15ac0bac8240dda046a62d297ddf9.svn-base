@@ -1,0 +1,18 @@
+//
+//  WorkReportListViewController.h
+//  Cancer
+//
+//  Created by hu su on 14/10/21.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "CustomSelectViewDelegate.h"
+
+@class CustomSelectView;
+
+@interface WorkReportListViewController : UIViewController<CustomSelectViewDelegate>
+
+@property (nonatomic, strong) IBOutlet CustomSelectView *selectView;
+@property (nonatomic, strong) NSArray *myTabs;
+@end

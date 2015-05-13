@@ -1,0 +1,130 @@
+//
+//  KnowledgeViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/10/31.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "KnowledgeViewController.h"
+#import "KnowledgeFolderCell.h"
+#import "UIWaitView.h"
+#import "SBJsonParser.h"
+#import "UtilTool.h"
+
+@implementation KnowledgeViewController
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+@synthesize myTableView = _myTableView;
+@synthesize folderArray = _folderArray;
+
+
+@synthesize waitView = _waitView;
+
+@synthesize pageNo = _pageNo;
+
+- (void)viewDidLoad {
+
+    [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    self.waitView = [[UIWaitView alloc] init:self.view.frame];
+    [self.waitView.aiv startAnimating];
+    [self.view addSubview:self.waitView];
+
+
+    NSNumber *parentNum = @1;
+    [self performSelector:@selector(initData:) withObject:parentNum afterDelay:0.5];
+
+}
+
+-(void)initData:(NSNumber *) parentId{
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSString *token = [userDic objectForKey:@"token"];
+
+    //读取首页数据
+
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@/manager/professionKnowledge/list?json={'token':'%@','parentId':%d,'pageIndex':%d,'pageSize':15}",[UtilTool getHostURL],token, [parentId integerValue],self.pageNo];
+
+
+
+
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodGet isReload:NO status:&status];
+
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        self.folderArray = [parser objectWithString:jsonString];
+    }
+
+
+
+
+
+    //如果是从缓存中读取的，则后台启动一个线程读取网络数据
+
+    if([status intValue]==3){
+        curIndexListUrl = url;
+        [NSThread detachNewThreadSelector:@selector(visitIndexUrlBackground) toTarget:self withObject:nil];
+    }
+
+
+
+
+    [self reloadTableView];
+
+    [self.waitView stopAnimating];
+    [self.waitView removeFromSuperview];
+}
+
+-(void)visitIndexUrlBackground{
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:curIndexListUrl paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&status];
+
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        self.folderArray = [parser objectWithString:jsonString];
+    }
+
+    //如果是从缓存中读取的，则后台启动一个线程读取网络数据
+
+    if([status intValue]==2){
+        [NSThread detachNewThreadSelector:@selector(reloadTableView) toTarget:self withObject:nil];
+    }
+}
+
+-(void)reloadTableView{
+    [self.myTableView reloadData];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.folderArray count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    KnowledgeFolderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"knowledgeFolder"];
+
+    cell.folderLabel.text = [self.folderArray objectAtIndex:[indexPath row]];
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 100.0f;
+
+    return height * self.myTableView.frame.size.width/320;
+}
+
+
+@end

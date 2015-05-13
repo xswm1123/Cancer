@@ -1,0 +1,142 @@
+//
+//  KnowledgeDetailViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/11/1.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "KnowledgeDetailViewController.h"
+#import "CustomUILabel.h"
+#import "SBJsonParser.h"
+#import "UtilTool.h"
+#import "UIWaitView.h"
+#import "UIImageView+WebCache.h"
+
+@interface KnowledgeDetailViewController ()
+
+@end
+
+@implementation KnowledgeDetailViewController
+
+@synthesize kid = _kid;
+
+@synthesize iconImageView = _iconImageView;
+@synthesize nameLabel = _nameLabel;
+@synthesize timeLabel = _timeLabel;
+@synthesize readOnlineView = _readOnlineView;
+@synthesize downloadView = _downloadView;
+@synthesize downloadLabel = _downloadLabel;
+@synthesize descriptionLabel = _descriptionLabel;
+
+@synthesize knowledgeDic = _knowledgeDic;
+
+@synthesize waitView = _waitView;
+
+@synthesize createTime = _createTime;
+
+@synthesize contentWebView = _contentWebView;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+
+    self.waitView = [[UIWaitView alloc] init:self.view.frame];
+    [self.waitView.aiv startAnimating];
+    [self.view addSubview:self.waitView];
+
+    [self performSelector:@selector(initData) withObject:nil afterDelay:0.5];
+
+}
+
+-(void)initData{
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSString *token = userDic[@"token"];
+
+    //读取首页数据
+
+
+
+
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@/manager/professionKnowledge/detail?json={'token':'%@','id':%d}", [UtilTool getHostURL], token, self.kid];
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodGet isReload:NO status:&status];
+
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        self.knowledgeDic = [parser objectWithString:jsonString];
+
+    }
+
+    //如果是从缓存中读取的，则后台启动一个线程读取网络数据
+
+    if([status intValue]==3){
+        curIndexListUrl = url;
+        [NSThread detachNewThreadSelector:@selector(visitIndexUrlBackground) toTarget:self withObject:nil];
+    }
+
+
+    [self reloadData];
+
+    [self.waitView stopAnimating];
+    [self.waitView removeFromSuperview];
+}
+
+-(void)reloadData{
+    if(self.knowledgeDic){
+        self.nameLabel.text = self.knowledgeDic[@"name"];
+        self.timeLabel.text = self.createTime;
+        [self.iconImageView setImageWithURL:[NSURL URLWithString:self.knowledgeDic[@"showImageUrl"]] placeholderImage:[UIImage imageNamed:@"noPicIconRect.png"]];
+        [self.descriptionLabel setLabelText:self.knowledgeDic[@"summary"] fontSize:12.0f];
+    }
+
+
+}
+
+
+-(void)visitIndexUrlBackground{
+
+
+    //读取首页数据
+
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:curIndexListUrl paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&status];
+
+    //读取成功
+
+    if([status intValue]==2){
+        SBJsonParser *parser = [[SBJsonParser alloc] init];
+        if(jsonString && [jsonString length]>0){
+            self.knowledgeDic = [parser objectWithString:jsonString];
+
+        }
+        [NSThread detachNewThreadSelector:@selector(reloadData) toTarget:self withObject:nil];
+    }
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (void)clickBack:(UITapGestureRecognizer *)gesture {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+@end

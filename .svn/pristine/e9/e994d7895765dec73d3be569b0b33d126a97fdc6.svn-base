@@ -1,0 +1,76 @@
+//
+//  InSideMsgViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/10/28.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "InSideMsgViewController.h"
+
+@interface InSideMsgViewController ()
+
+@end
+
+@implementation InSideMsgViewController
+
+@synthesize tableView = _tableView;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.tableView.customDelegate =self;
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell"];
+   if(!cell){
+       cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myCell"];
+   }
+    cell.textLabel.text = @"test";
+    return cell;
+}
+
+//实现下拉刷新协议的两个方法
+- (void)refreshTableView:(id)sender {
+    [self.tableView refreshSuccessed];
+}
+
+- (void)gotoNextPage:(id)sender {
+
+}
+//将滚动事件传递到table的方法
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self.tableView scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [self.tableView scrollViewWillBeginDragging:scrollView];
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.tableView scrollViewDidScroll:scrollView];
+}
+//将滚动事件传递到table的方法结束
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

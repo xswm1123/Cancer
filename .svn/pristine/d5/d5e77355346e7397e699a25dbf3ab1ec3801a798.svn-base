@@ -1,0 +1,363 @@
+//
+//  KnowledgeDetailViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/11/1.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "KnowledgeDetailViewController.h"
+#import "CustomUILabel.h"
+#import "SBJsonParser.h"
+#import "UtilTool.h"
+#import "UIWaitView.h"
+#import "UIImageView+WebCache.h"
+#import "ReadAttachOnLineViewController.h"
+
+@interface KnowledgeDetailViewController ()
+
+@end
+
+@implementation KnowledgeDetailViewController
+
+@synthesize kid = _kid;
+
+@synthesize iconImageView = _iconImageView;
+@synthesize nameLabel = _nameLabel;
+@synthesize timeLabel = _timeLabel;
+@synthesize readOnlineView = _readOnlineView;
+@synthesize downloadView = _downloadView;
+@synthesize downloadLabel = _downloadLabel;
+@synthesize descriptionLabel = _descriptionLabel;
+
+@synthesize knowledgeDic = _knowledgeDic;
+
+@synthesize waitView = _waitView;
+
+@synthesize createTime = _createTime;
+
+@synthesize contentWebView = _contentWebView;
+
+@synthesize receiveData = _receiveData;
+
+@synthesize fileLength = _fileLength;
+
+@synthesize receivedLength = _receivedLength;
+
+@synthesize connection = _connection;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.hideRightBut = YES;
+
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAttach:)];
+    self.readOnlineView.userInteractionEnabled = YES;
+    self.readOnlineView.tag = 1;
+    [self.readOnlineView addGestureRecognizer:tap1];
+
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAttach:)];
+    self.downloadView.userInteractionEnabled = YES;
+    self.downloadView.tag =2;
+    [self.downloadView addGestureRecognizer:tap2];
+
+
+
+
+    // Do any additional setup after loading the view.
+}
+
+-(void)tapAttach:(UITapGestureRecognizer *)tapGestureRecognizer{
+    UIView *tapView= tapGestureRecognizer.view;
+    tapView.alpha = 0.5;
+    [self performSelector:@selector(doAttach:) withObject:tapView afterDelay:0.5];
+}
+
+-(void)doAttach:(UIView *)targetView{
+    targetView.alpha = 1.0f;
+
+
+
+    if(self.knowledgeDic[@"attachmentUrl"]== [NSNull null]){
+        return;
+    }
+
+    NSString *attachUrl = self.knowledgeDic[@"attachmentUrl"];
+
+    if(1 == [targetView tag]){ //在线查看
+        NSMutableDictionary *attachDic = [[NSMutableDictionary alloc] init];
+        attachDic[@"attachUrl"] = attachUrl;
+        attachDic[@"view"] = @"online";
+        [self performSegueWithIdentifier:@"showAttach" sender:attachDic];
+
+    }else{//下载
+
+        if([@"下载" isEqualToString:self.downloadLabel.text]) {
+            [[NSURLCache sharedURLCache] removeAllCachedResponses];
+
+            NSURL *url = [NSURL URLWithString:attachUrl];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+            [self.connection start];
+        }else if([@"查看" isEqualToString:self.downloadLabel.text]){
+
+            NSString *fileName = [self getFileNameFromFileInfo:attachUrl];
+            NSMutableDictionary *attachDic = [[NSMutableDictionary alloc] init];
+            attachDic[@"attachUrl"] = fileName;
+            attachDic[@"view"] = @"local";
+            [self performSegueWithIdentifier:@"showAttach" sender:attachDic];
+
+        } else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"取消" message:@"是否取消下载？" delegate:self cancelButtonTitle:@"继续下载" otherButtonTitles:@"取消下载", nil];
+            alertView.tag=100;
+            [alertView show];
+
+        }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([@"showAttach" isEqualToString:segue.identifier]){
+
+        NSMutableDictionary *dic = sender;
+
+       ReadAttachOnLineViewController *readAttachOnLineViewController = (ReadAttachOnLineViewController *)segue.destinationViewController;
+        if([dic[@"view"] isEqualToString:@"online"]) {
+            readAttachOnLineViewController.fileName = nil;
+            readAttachOnLineViewController.attachUrl = dic[@"attachUrl"];
+        }else{
+            readAttachOnLineViewController.attachUrl = nil;
+            readAttachOnLineViewController.fileName = dic[@"attachUrl"];
+        }
+    }
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+
+    self.waitView = [[UIWaitView alloc] init:self.view.frame];
+    [self.waitView.aiv startAnimating];
+    [self.view addSubview:self.waitView];
+
+    [self performSelector:@selector(initData) withObject:nil afterDelay:0.5];
+
+}
+
+-(void)initData{
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSString *token = userDic[@"token"];
+
+    //读取首页数据
+
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@/manager/professionKnowledge/detail?json={'token':'%@','id':%ld}", [UtilTool getHostURL], token, (long)self.kid];
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodGet isReload:NO status:&status];
+
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        self.knowledgeDic = [parser objectWithString:jsonString];
+
+    }
+
+    //如果是从缓存中读取的，则后台启动一个线程读取网络数据
+
+    if([status intValue]==3){
+        curIndexListUrl = url;
+        [NSThread detachNewThreadSelector:@selector(visitIndexUrlBackground) toTarget:self withObject:nil];
+    }
+
+
+
+//    self.knowledgeDic[@"attachmentUrl"] =  @"http://www.parsec.com.cn/pc-Europa-2.doc";
+
+    [self reloadData];
+
+    [self.waitView stopAnimating];
+    [self.waitView removeFromSuperview];
+}
+
+-(void)reloadData{
+    if(self.knowledgeDic){
+        self.nameLabel.text = self.knowledgeDic[@"name"];
+        self.timeLabel.text = self.createTime;
+        [self.iconImageView setImageWithURL:[NSURL URLWithString:self.knowledgeDic[@"showImageUrl"]] placeholderImage:[UIImage imageNamed:@"noPicIconRect.png"]];
+        [self.descriptionLabel setLabelText:self.knowledgeDic[@"summary"] fontSize:12.0f];
+        if(self.knowledgeDic[@"content"] != [NSNull null] && [self.knowledgeDic[@"content"] length]>0){
+            [self.contentWebView loadHTMLString:self.knowledgeDic[@"content"] baseURL:nil];
+        }
+
+        if(!(self.knowledgeDic[@"attachmentUrl"] != [NSNull null] && [self.knowledgeDic[@"attachmentUrl"] length]>0)){
+            self.downloadView.hidden = YES;
+            self.readOnlineView.hidden = YES;
+
+
+        }else{
+            self.downloadView.hidden = NO;
+            self.readOnlineView.hidden = NO;
+
+
+            NSString *fileName = [self getFileNameFromFileInfo:self.knowledgeDic[@"attachmentUrl"]];
+            if(fileName && [fileName length]>0){
+                self.downloadLabel.text=@"查看";
+            }
+        }
+
+
+
+    }
+
+
+}
+
+
+-(void)visitIndexUrlBackground{
+
+
+    //读取首页数据
+
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:curIndexListUrl paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&status];
+
+    //读取成功
+
+    if([status intValue]==2){
+        SBJsonParser *parser = [[SBJsonParser alloc] init];
+        if(jsonString && [jsonString length]>0){
+            self.knowledgeDic = [parser objectWithString:jsonString];
+//            self.knowledgeDic[@"attachmentUrl"] =  @"http://www.parsec.com.cn/pc-Europa-2.doc";
+
+        }
+        [NSThread detachNewThreadSelector:@selector(reloadData) toTarget:self withObject:nil];
+    }
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (void)clickBack:(UITapGestureRecognizer *)gesture {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    if(self.receiveData){
+        [self.receiveData setLength:0];
+    }else{
+        self.receiveData = [[NSMutableData alloc] init];
+    }
+
+    NSHTTPURLResponse *curResponse = (NSHTTPURLResponse *)response;
+    NSDictionary *headers = [curResponse allHeaderFields];
+    self.fileLength =  [headers[@"Content-Length"] longLongValue];
+    if(self.fileLength==0)self.fileLength=1;
+
+    self.receivedLength = 0;
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterPercentStyle;
+    self.downloadLabel.text = [formatter stringFromNumber:@(self.receivedLength/self.fileLength)];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.receiveData appendData:data];
+    self.receivedLength +=  [data length];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterPercentStyle;
+    self.downloadLabel.text = [formatter stringFromNumber:@(self.receivedLength/self.fileLength)];
+
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+     self.downloadLabel.text = @"查看";
+
+    NSDate *date = [NSDate date];
+    NSTimeInterval timeInterval = [date timeIntervalSince1970];
+
+    NSString *attachUrl = self.knowledgeDic[@"attachmentUrl"];
+
+    NSString *attchFileName = [attachUrl lastPathComponent];
+
+    NSString *fileName = [NSString stringWithFormat:@"%d%@", (int) timeInterval,attchFileName];
+
+
+
+
+    NSArray *ar = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = ar[0];
+    NSString *path = [documentPath stringByAppendingString:[NSString stringWithFormat:@"/%@",fileName]];
+    [self.receiveData writeToFile:path atomically:YES];
+
+
+    [self saveFileInfo:attachUrl fileName:fileName];
+
+}
+
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+     self.downloadLabel.text = @"下载";
+}
+
+
+-(void)saveFileInfo:(NSString *)url fileName:(NSString *)fileName{
+    NSArray *arr  = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = arr[0];
+    NSString *path = [documentPath stringByAppendingString:@"/fileInfo.plist"];
+    NSMutableDictionary *fileDic = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+
+    if(!fileDic){
+        fileDic = [[NSMutableDictionary alloc] init];
+    }
+
+    fileDic[url] = fileName;
+
+    [fileDic writeToFile:path atomically:YES];
+}
+
+-(NSString *)getFileNameFromFileInfo:(NSString *)url{
+    NSArray *arr  = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = arr[0];
+    NSString *path = [documentPath stringByAppendingString:@"/fileInfo.plist"];
+    NSDictionary *fileDic = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+    if (!fileDic) {
+        return nil;
+    }
+
+    if(fileDic[url] == [NSNull null]){
+        return nil;
+    }
+
+    NSString *fileName = fileDic[url];
+
+    if(fileName && [fileName length]>0){
+        return fileName;
+    }
+
+    return nil;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(alertView.tag==100){
+        if(buttonIndex==1){
+            [self.connection cancel];
+        }
+    }
+
+}
+
+
+@end

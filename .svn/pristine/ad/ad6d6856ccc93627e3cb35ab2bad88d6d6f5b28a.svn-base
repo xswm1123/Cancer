@@ -1,0 +1,99 @@
+//
+//  CustomTabBarController.m
+//  Cancer
+//
+//  Created by hu su on 14-10-14.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "CustomTabBarController.h"
+#import "UtilTool.h"
+
+@interface CustomTabBarController (){
+    NSInteger  preTab;
+}
+@end
+
+@implementation CustomTabBarController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    preTab = 0;
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    if(item.tag==1 || item.tag==2){
+
+        if(item.tag==1){
+            [self performSelector:@selector(gotoESOP) withObject:nil afterDelay:0.3];
+        }else if(item.tag==2){
+            [self performSelector:@selector(takePhone) withObject:nil afterDelay:0.3];
+
+        }
+
+
+        [self performSelector:@selector(changeSelect) withObject:nil afterDelay:0.5];
+    }else{
+        preTab = tabBar.selectedItem.tag;
+
+
+    }
+
+}
+
+/**
+* 跳转到 ESOP
+*/
+-(void)gotoESOP{
+    BOOL appExisted=[[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"myapp://toWangTing"]];
+    if(appExisted){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"myapp://toWangTing"]];
+    }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/zhong-guo-yi-dong-shou-ji/id583700738?mt=8"]];
+    }
+}
+
+/**
+* 拨打客服电话
+*/
+
+-(void)takePhone{
+    if(isPad || isPod){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"该设备不支持拨打电话" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [alertView show];
+
+    }else{
+
+        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"tel:10086"]];
+
+    }
+}
+
+-(void)changeSelect{
+    self.selectedIndex  =preTab;
+}
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+
+
+
+
+
+@end

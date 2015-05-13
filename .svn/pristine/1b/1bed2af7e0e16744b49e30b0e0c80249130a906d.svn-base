@@ -1,0 +1,60 @@
+//
+//  WorkReportListViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/10/21.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "WorkReportListViewController.h"
+#import "CustomSelectView.h"
+
+@interface WorkReportListViewController ()
+
+@end
+
+@implementation WorkReportListViewController {
+@private
+    CustomSelectView *_selectView;
+}
+
+@synthesize selectView = _selectView;
+
+@synthesize myTabs = _myTabs;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.myTabs = @[@"收到的汇报",@"发出的汇报"];
+    self.selectView.customDelegate = self;
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)selectTab:(NSInteger)selectIndex selectView:(UIScrollView *)selectView {
+}
+
+- (NSString *)getLabelName:(NSInteger)index SelectView:(UIScrollView *)selectView {
+    return [self.myTabs objectAtIndex:index];
+}
+
+- (NSInteger)getLabelCount:(UIScrollView *)selectView {
+    return [self.myTabs count];
+}
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

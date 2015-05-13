@@ -1,0 +1,168 @@
+//
+//  CheckVIewController.m
+//  Cancer
+//  考勤实现类
+//  Created by hu su on 14/10/27.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "CheckVIewController.h"
+#import "AttenceCell.h"
+
+
+#import "UtilTool.h"
+#import "SBJsonParser.h"
+#import "Constants.h"
+
+@interface CheckVIewController ()
+
+@end
+
+@implementation CheckVIewController
+
+@synthesize attendanceTableView;
+
+@synthesize waitView=_waitView;
+
+@synthesize attences;
+
+- (void)viewDidLoad {
+   
+    self.navTitle=CHECK_VC_TITLE;
+    self.hideRightBut=YES;
+    
+    self.pageSize=PAGESIZE;
+    self.curPage=PAGEINDEX;
+   [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.waitView = [[UIWaitView alloc] init:self.view.frame];
+    [self.waitView.aiv startAnimating];
+    [self.view addSubview:self.waitView];
+    [self performSelector:@selector(getAttenceData) withObject:nil afterDelay:0.5];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//--------------------实现tableview 的各种代理-----------
+
+/**
+ * 所操作的table
+ **/
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+/**
+ * 列表分段中条目数
+ **/
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    NSInteger rows = [self.attences count];
+    if (self.totalPages > self.curPage) {
+        rows += 1;
+    }
+    
+    return rows;
+}
+
+/**
+ * 列表中的条目视图
+ **/
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    //若当前table下标值大于等于列表数据，则将该cell设置为“更多”的cell
+    if([indexPath row]>=[self.attences count]){
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SimpleTableIdentifier"];
+        cell.textLabel.text = PAGE_MORE_MSG;
+        cell.tag = 1000;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+        return cell;
+    }
+
+    AttenceCell *cell=[tableView dequeueReusableCellWithIdentifier:@"AttenceCell"];
+
+    //设置cell数据信息
+    NSDictionary *attence=[attences objectAtIndex:indexPath.row];
+    //设置时间年月日/时分
+    NSString *date=[attence objectForKey:@"showCreateDate"];
+    cell.calendarLabel.text=[date substringWithRange:NSMakeRange(0, 10)];
+    cell.timeLabel.text=[date substringWithRange:NSMakeRange(11,5)];
+    //设置地址
+    cell.addressLabel.text=[attence objectForKey:@"location"];
+    //设置图片签到或签退
+    if([[attence objectForKey:@"signType"]intValue]==0)
+        cell.typeImage.image=[UIImage imageNamed:@"writeIn.png"];
+    else
+        cell.typeImage.image=[UIImage imageNamed:@"writeOut.png"];
+    
+    return cell;
+}
+/**
+ * 列表点击某一列
+ **/
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [self.attendanceTableView cellForRowAtIndexPath:indexPath];
+    //如果tag=1000,即加载下一页数据
+    if (cell.tag == 1000) {
+        [self.attendanceTableView deselectRowAtIndexPath:indexPath animated:YES];
+        ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        ai.frame = CGRectMake(10, 10, 50, 50);
+        [ai startAnimating];
+        [cell addSubview:ai];
+        self.curPage++;
+        if(self.curPage>self.totalPages){
+            self.curPage = self.totalPages;
+        }
+        [self performSelector:@selector(getAttenceData) withObject:nil afterDelay:0.5];
+    }else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+//返回按钮
+-(void)clickBack:(UITapGestureRecognizer *)gesture{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+//得到考勤列表数据
+-(void)getAttenceData{
+    NSString *url=[NSString stringWithFormat:@"manager/attendance/list?json={'pageIndex':%ld,'pageSize':%ld,'token':'%@'}",self.curPage,self.pageSize,[UtilTool getToken]];
+    url = [NSMutableString stringWithFormat:@"%@%@",[UtilTool getHostURL],url];
+    NSNumber *state;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodPost isReload:YES status:&state];
+    
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        NSDictionary *dic = [parser objectWithString:jsonString];
+        //当为第一页，进行设置；否则加入原数组
+        if(self.curPage==1)
+            attences = [dic objectForKey:@"list"];
+        else
+            [attences addObjectsFromArray:[dic objectForKey:@"list"]];
+        
+        self.totalPages=[[dic objectForKey:@"totalPage"]integerValue];
+    }
+    
+    [_waitView.aiv stopAnimating];
+    [_waitView removeFromSuperview];
+    //table重新加载数据
+    [attendanceTableView reloadData];
+}
+
+@end

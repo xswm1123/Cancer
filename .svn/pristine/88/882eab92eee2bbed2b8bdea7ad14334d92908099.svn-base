@@ -1,0 +1,52 @@
+//
+//  WorkReportListViewController.h
+//  Cancer
+//
+//  Created by hu su on 14/10/21.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "CommonViewController.h"
+#import "UIWaitView.h"
+#import "CustomSelectView.h"
+#import "CustomSelectViewDelegate.h"
+#import "UtilTool.h"
+#import "SBJsonParser.h"
+
+@interface WorkReportListViewController : CommonViewController<UITableViewDataSource, UITableViewDelegate, CustomSelectViewDelegate>
+
+@property(nonatomic, strong) NSMutableArray *receiveReportArray; //接收汇报列表数组
+
+@property(nonatomic, strong) NSMutableArray *sendReportArray; //发送汇报列表数组
+
+@property(nonatomic, strong) NSArray *tabSelectName;//tab分页组件的名字
+
+@property(nonatomic,strong) UIWaitView *waitView; //等待对话框
+
+@property(nonatomic, strong) IBOutlet UIView *addReportBtn; //加入新汇报按钮
+
+@property(nonatomic,strong) IBOutlet CustomSelectView *tabSelectView; //tab组件
+
+@property(nonatomic,strong) IBOutlet UITableView *table; //显示列表组件
+
+@property(nonatomic, strong) NSMutableArray *displayArray; //显示列表数组
+
+@property int pageSize; // 每页数量
+
+@property int recPageIndex; // 接收汇报列表页码
+
+@property int recTotalPage;
+
+@property int sendPageIndex; // 发送汇报列表页面
+
+@property int sendTotalPage;
+
+@property NSInteger selIndex;
+
+/**
+ *点击添加汇报按钮事件
+ */
+-(void)addReportBtnClick;
+
+@end

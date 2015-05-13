@@ -1,0 +1,26 @@
+//
+//  FirstPageItemCell.h
+//  Cancer
+//
+//  Created by hu su on 14/10/25.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@class CustomUILabel;
+
+@interface FirstPageItemCell : UITableViewCell
+@property (nonatomic, strong) IBOutlet UIImageView *iconImageView;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet CustomUILabel *contentLabel;
+@property (nonatomic, strong) IBOutlet UILabel *timeLabel;
+
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *leftMargin;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *rightMargin;
+
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *iconWidthConstraint;
+@property (nonatomic,strong) IBOutlet NSLayoutConstraint *iconHeightConstraint;
+@property (nonatomic,strong) IBOutlet UILabel *percentLabel;
+
+@end

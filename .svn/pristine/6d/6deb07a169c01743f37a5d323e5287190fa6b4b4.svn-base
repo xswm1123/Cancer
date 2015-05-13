@@ -1,0 +1,455 @@
+//
+//  FirstViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/10/21.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "FirstViewController.h"
+#import "UtilTool.h"
+#import "UIWaitView.h"
+#import "PagePhotosView.h"
+#import "SBJsonParser.h"
+
+@interface FirstViewController ()
+
+@end
+
+@implementation FirstViewController
+
+@synthesize myTable = _myTable;
+@synthesize msgNoticeView = _msgNoticeView;
+@synthesize movingMsgLabel = _movingMsgLabel;
+@synthesize adArray = _adArray;
+@synthesize waitView = _waitView;
+@synthesize advertiseView = _advertiseView;
+
+@synthesize firstPageDataDic = _firstPageDataDic;
+
+@synthesize msgArray = _msgArray;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+//    self.navigationController.navigationBar.backgroundColor =[UtilTool colorWithHexString:@"16b7e5"];
+
+    self.navigationController.navigationBar.barTintColor = [UtilTool colorWithHexString:@"16b7e5"];
+
+    self.leftImage = [UIImage imageNamed:@"clientVersionBut.png"];
+    self.leftImageRect = CGRectMake(0, 0, 83, 39);
+
+   self.hideRightBut = YES;
+
+
+
+    self.myTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+
+    self.waitView = [[UIWaitView alloc] init:self.view.frame];
+    [self.view addSubview:self.waitView];
+    [self.waitView startAnimating];
+
+
+    [self performSelector:@selector(getFirstViewData) withObject:nil afterDelay:0.2];
+
+
+
+    colorArry = @[@"f668b2",@"67d6da",@"fdc800",@"faadd5"];
+
+    imageArray = @[[UIImage imageNamed:@"workReportMain.png"],[UIImage imageNamed:@"insideMsgMain.png"],[UIImage imageNamed:@"knowledge.png"],[UIImage imageNamed:@"checkwork.png"]];
+
+
+    // Do any additional setup after loading the view.
+}
+
+
+
+/**
+* 从缓存中读取数据，如果是第一次访问，则直接从网络读取数据
+*/
+-(void)getFirstViewData{
+
+
+
+
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSString *token = [userDic objectForKey:@"token"];
+
+    //读取首页数据
+
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@manager/first/list?json={'token':'%@'}",[UtilTool getHostURL],token];
+
+
+
+
+    NSNumber *status;
+    NSString *jsonString = [UtilTool sendUrlRequestByCache:url paramValue:nil method:HTTPRequestMethodGet isReload:NO status:&status];
+
+    SBJsonParser *parser = [[SBJsonParser alloc] init];
+    if(jsonString && [jsonString length]>0){
+        self.firstPageDataDic = [parser objectWithString:jsonString];
+    }
+
+
+    //读取广告数据
+
+    curAdUrl = [NSString stringWithFormat:@"%@advert/list?json={'funType':'index'}",[UtilTool getHostURL]];
+
+//    NSString *paraValue= @"json={'funType':'index'}";
+
+    NSNumber *status1;
+
+    jsonString = [UtilTool sendUrlRequestByCache:curAdUrl paramValue:nil method:HTTPRequestMethodGet isReload:NO status:&status1];
+    if(jsonString && [jsonString length]>0){
+        self.adArray = [parser objectWithString:jsonString];
+    }
+
+
+    //如果是从缓存中读取的，则后台启动一个线程读取网络数据
+
+    if([status intValue]==3){
+        curIndexListUrl = url;
+        [NSThread detachNewThreadSelector:@selector(visitIndexUrlBackground) toTarget:self withObject:nil];
+    }
+
+
+    self.msgArray = @[@"11212",@"222"];
+
+
+    [self reloadTableView];
+
+    [self.waitView stopAnimating];
+    [self.waitView removeFromSuperview];
+}
+
+/**
+* 后台从网络读取首页数据
+*/
+
+
+-(void)visitIndexUrlBackground{
+
+
+    NSNumber *status;
+
+
+    NSString *jsonString =  [UtilTool sendUrlRequestByCache:curIndexListUrl paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&status];
+    SBJsonParser *parser =  [[SBJsonParser alloc] init];
+
+    if(jsonString && [jsonString length]>0){
+        self.firstPageDataDic = [parser objectWithString:jsonString];
+    }
+
+
+    NSNumber *status1;
+
+    jsonString = [UtilTool sendUrlRequestByCache:curAdUrl paramValue:nil method:HTTPRequestMethodGet isReload:YES status:&status1];
+    if(jsonString && [jsonString length]>0){
+        self.adArray = [parser objectWithString:jsonString];
+    }
+
+
+    if([status intValue]==2 || [status1 intValue]==2){
+        [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:YES];
+    }
+
+
+}
+
+/**
+* 重新刷新表格
+*/
+-(void) reloadTableView{
+
+    if(self.msgArray && [self.msgArray count]>0){
+        [self msgViewToggle:NO]; //显示消息层
+    }
+
+
+    [self.myTable reloadData];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//跳转到客户版
+- (void)clickBack:(UITapGestureRecognizer *)gesture {
+    BOOL appExisted=[[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"salesHelper://"]];
+    if(appExisted){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"salesHelper://"]];
+    }else{
+        //需要修改为客户版下载地址
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/zhong-guo-yi-dong-shou-ji/id583700738?mt=8"]];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [self msgViewToggle:YES];
+
+
+}
+
+-(void)msgViewToggle:(BOOL)close{
+    NSLayoutConstraint *msgViewConstraint = nil;
+
+    for(NSLayoutConstraint *c in self.view.constraints){
+        if([c.firstItem isEqual:self.msgNoticeView]){
+            if(c.firstAttribute == NSLayoutAttributeTop){
+                msgViewConstraint=c;
+                break;
+            }
+        }
+    }
+
+
+
+
+
+
+    if(close){
+            msgViewConstraint.constant = -34.0f;
+
+    }else{
+        msgViewConstraint.constant = 0.0f;
+
+    }
+
+    self.msgNoticeView.hidden = close;
+}
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    if(!self.firstPageDataDic){
+        return 0;
+    }
+
+
+    NSInteger  secionNum =  3;
+    if(self.adArray && [self.adArray count]>0){
+        secionNum ++;
+    }
+    return secionNum;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    NSInteger  curSectionIndex = section;
+    if(!(self.adArray && [self.adArray count]>0)){
+        curSectionIndex++;
+    }
+
+    if(curSectionIndex<2){
+        return 1;
+    }else if(curSectionIndex==2){ //内部消息
+        NSArray *activityArray =  [self.firstPageDataDic objectForKey:@"ims"];
+        if(activityArray){
+            return [activityArray count];
+        }
+    }else if(curSectionIndex==3){ //业务只是
+        NSArray *terminalArray = [self.firstPageDataDic objectForKey:@"pks"];
+        if(terminalArray){
+
+
+            return [terminalArray count];
+        }
+    }
+
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    static NSString *cellName = @"FirstViewCell";
+
+    UITableViewCell *cell =[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellName];;
+
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+
+    NSInteger curSection =[indexPath section];
+
+    if(!(self.adArray != nil && [self.adArray count]>0)){
+        curSection++;
+    }
+
+
+    if(curSection==0){ //广告
+
+        CGFloat x = (self.myTable.frame.size.width-310 * (self.myTable.frame.size.width/320))/2.0f;
+
+        self.advertiseView = [[PagePhotosView alloc] initWithFrame:CGRectMake(x,5, 310 * (self.myTable.frame.size.width/320), 150 * (self.myTable.frame.size.width/320)) withDataSource:self];
+
+
+
+        [self.advertiseView autoTurnPage:YES];
+
+        [cell addSubview:self.advertiseView];
+    }else if(curSection==1){ //功能按钮
+        CGFloat height =  (320-10-6)/4 * self.myTable.frame.size.width/320 ;
+
+        for(int i=0;i<4;i++){
+            UIView *functionView = [[UIView alloc] initWithFrame:CGRectMake(5+i*height+i*2, 0, height, height)];
+            functionView.backgroundColor = [UtilTool colorWithHexString:[colorArry objectAtIndex:i]];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((height-173/2)/2, (height-142/2)/2, 173/2, 142/2)];
+            imageView.image = [imageArray objectAtIndex:i];
+            [functionView addSubview:imageView];
+            functionView.tag = i;
+
+            UITapGestureRecognizer *functionTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickFunctionBut:)];
+            [functionView addGestureRecognizer:functionTapGesture];
+
+
+            [cell addSubview:functionView];
+        }
+
+    }
+
+
+
+
+    return cell;
+}
+
+
+-(void)clickFunctionBut:(UITapGestureRecognizer *)tapGestureRecognizer{
+    tapGestureRecognizer.view.alpha = 0.5;
+
+    [self performSelector:@selector(doFunction:) withObject:tapGestureRecognizer.view afterDelay:0.5];
+}
+
+-(void)doFunction:(UIView *)buttonView{
+
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.5];
+    buttonView.alpha = 1.0f;
+    [UIView commitAnimations];
+
+    if(buttonView.tag==0){
+        [self performSegueWithIdentifier:@"first2workReport" sender:self];
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSInteger curSection =[indexPath section];
+
+    if(!(self.adArray != nil && [self.adArray count]>0)){
+        curSection++;
+    }
+
+
+
+    if(!self.firstPageDataDic){
+        return 0;
+    }
+
+    CGFloat height=0.0;
+
+    CGSize myTableSize = self.myTable.frame.size;
+
+
+    switch(curSection){
+        case 0:
+
+            height =  150  * (myTableSize.width/320) + 10.0f;
+
+
+            break;
+        case 1: //功能按钮
+
+            return (320-10-6)/4 * myTableSize.width/320 +5;
+
+
+            break;
+        case 2: //热点活动
+            if(isPad){
+                height = 110;
+
+            }else{
+                height = 58;
+
+            }
+            break;
+        case 3: //智慧机
+            if(isPad){
+                height = 140;
+            }else{
+                height =80.0;
+            }
+
+            break;
+        case 4: //产品展示
+            if(isPad){
+                height =170;
+            } else{
+                height =92;
+            }
+
+            break;
+        default: //常用应用
+            if(isPad){
+                height =170;
+            } else{
+                height =92;
+            }
+            break;
+    }
+
+    return height;
+
+}
+
+
+
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//
+//
+//    return heaerView;
+//}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger curSection =[indexPath section];
+
+    if(!(self.adArray != nil && [self.adArray count]>0)){
+        curSection++;
+    }
+
+
+}
+
+
+
+
+- (int)numberOfPages:(PagePhotosView *)photosView {
+    return [self.adArray count];
+}
+
+- (NSString *)imageAtIndex:(int)index1 PagePhotosView:(PagePhotosView *)photosView {
+    NSDictionary *adDic = [self.adArray objectAtIndex:index1];
+    NSString *picName = [adDic objectForKey:@"showUrl"];
+    return picName;
+}
+
+- (void)selectImageView:(NSInteger)page pagePhotosView:(PagePhotosView *)photosView {
+
+}
+
+
+@end

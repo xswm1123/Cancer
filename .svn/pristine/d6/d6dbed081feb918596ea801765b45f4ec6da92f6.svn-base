@@ -1,0 +1,240 @@
+//
+//  WorkReportListViewController.m
+//  Cancer
+//
+//  Created by hu su on 14/10/21.
+//  Copyright (c) 2014年 parsec. All rights reserved.
+//
+
+#import "WorkReportListViewController.h"
+#import "UtilTool.h"
+#import "WorkReportTableCell.h"
+
+@interface WorkReportListViewController ()
+
+@end
+
+@implementation WorkReportListViewController
+
+@synthesize tabSelectView;
+@synthesize tabSelectName;
+@synthesize receiveReportArray;
+@synthesize sendReportArray;
+@synthesize waitView;
+@synthesize addReportBtn;
+@synthesize table;
+@synthesize selIndex;
+@synthesize displayArray;
+@synthesize recPageIndex;
+@synthesize recTotalPage;
+@synthesize sendPageIndex;
+@synthesize sendTotalPage;
+@synthesize pageSize;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.tabSelectName = @[@"收件的汇报",@"发件的汇报"];
+    self.tabSelectView.customDelegate = self;
+    // Do any additional setup after loading the view.
+    
+    pageSize = 10;
+    sendPageIndex = 1;
+    recPageIndex = 1;
+    
+    displayArray = [[NSMutableArray alloc]init];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addReportBtnClick)];
+    [addReportBtn addGestureRecognizer:tap];
+    
+    waitView = [[UIWaitView alloc]initWithFrame:self.view.frame];
+    
+    [waitView.aiv startAnimating];
+    [self.view addSubview:waitView];
+    selIndex = 0;
+    [self performSelector:@selector(getDataList) withObject:NULL afterDelay:0.1];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+//---- tab 组件代理
+- (void)selectTab:(NSInteger)selectIndex selectView:(UIScrollView *)selectView {
+    
+    selIndex  = selectIndex;
+    [displayArray removeAllObjects];
+    if (selIndex == 0) {
+        if (receiveReportArray == nil) {
+            
+            [waitView.aiv startAnimating];
+            [self.view addSubview:waitView];
+            [self performSelector:@selector(getDataList) withObject:NULL afterDelay:0.1];
+            
+        }else{
+            [displayArray addObjectsFromArray:receiveReportArray];
+        }
+        
+    }
+    if (selIndex == 1) {
+        if (sendReportArray == nil) {
+            
+            [waitView.aiv startAnimating];
+            [self.view addSubview:waitView];
+            [self performSelector:@selector(getDataList) withObject:NULL afterDelay:0.1];
+            
+        }else{
+            [displayArray addObjectsFromArray:sendReportArray];
+        }
+    }
+    [table reloadData];
+}
+
+- (NSString *)getLabelName:(NSInteger)index SelectView:(UIScrollView *)selectView {
+    return [self.tabSelectName objectAtIndex:index];
+}
+
+- (NSInteger)getLabelCount:(UIScrollView *)selectView {
+    return [self.tabSelectName count];
+}
+//--------
+-(void)getDataList
+{
+    NSDictionary *userDic = [UtilTool getUserDic];
+    NSString *token = [userDic objectForKey:@"token"];
+    NSDictionary *user = [[userDic objectForKey:@"user"] objectAtIndex:0];
+    NSString *url=[[NSString alloc]initWithFormat:@"%@manager/jobReport/list",[UtilTool getHostURL]];
+    
+    
+    
+    NSMutableString *param = [[NSMutableString alloc]init];
+    [param appendFormat:@"json={"];
+    [param appendFormat:@"\"token\":\"%@\" ,", token];
+    [param appendFormat:@"\"userId\":%i ,", [[user objectForKey:@"id"] intValue] ];
+    [param appendFormat:@"\"type\":%li ,", selIndex];
+    [param appendFormat:@"\"pageSize\":%i ,", pageSize];
+    
+    if (selIndex == 1) {
+        [param appendFormat:@"\"pageIndex\":%i ", sendPageIndex];
+    }
+    if (selIndex == 0) {
+        [param appendFormat:@"\"pageIndex\":%i ", recPageIndex];
+    }
+    
+    
+    [param appendFormat:@"}"];
+    
+    NSLog(param , @"");
+    
+    [waitView.aiv stopAnimating];
+    [waitView removeFromSuperview];
+    
+    return;
+    
+    NSNumber *num = nil;
+    NSString *str = [UtilTool sendUrlRequestByCache:url paramValue:param method:HTTPRequestMethodPost isReload:YES status:&num];
+    
+    SBJsonParser *parser=[[SBJsonParser alloc]init];
+    NSDictionary *jsonDict=[parser objectWithString:str];
+    
+    NSNumber *result = [jsonDict objectForKey:@"status"];
+    if ([result intValue]== 200) {
+        
+        NSArray *retlist = [jsonDict objectForKey:@"list"];
+        if (selIndex == 1) {
+            sendTotalPage = [[jsonDict objectForKey:@"totalPage"] intValue];
+            if (sendPageIndex == 1) {
+                [sendReportArray removeAllObjects];
+            }
+            [sendReportArray addObjectsFromArray:retlist];
+            sendPageIndex ++;
+        }
+        if (selIndex == 0) {
+            recTotalPage = [[jsonDict objectForKey:@"totalPage"] intValue];
+            if (recPageIndex == 1) {
+                [receiveReportArray removeAllObjects];
+            }
+            [receiveReportArray addObjectsFromArray:retlist];
+            recPageIndex ++;
+        }
+        
+        [table reloadData];
+    }else{
+        // 请求不成功后返回什么错误？统一api
+        if([jsonDict valueForKey:@"msg"] != nil)
+            [UtilTool ShowAlertView:nil setMsg:[jsonDict valueForKey:@"msg"]];
+        else
+            [UtilTool ShowAlertView:nil setMsg:@"系统繁忙,请稍后重试"];
+        
+    }
+
+}
+
+
+//导航栏左边按钮
+-(void)clickBack:(UITapGestureRecognizer *)gesture
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//导航栏右边按钮
+-(void)share:(UITapGestureRecognizer *)gesture
+{
+    
+}
+
+//--------------------现实tableview 的各种代理-----------
+/**
+ * 每个单元格的高度
+ **/
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 70.0f;
+}
+
+/**
+ * 列表分段中条目数
+ **/
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return displayArray.count;
+}
+
+/**
+ * 列表中的条目视图
+ **/
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *UITableViewCellIdentifier = @"UITableViewCell";
+    WorkReportTableCell *cell =  [tableView dequeueReusableCellWithIdentifier:UITableViewCellIdentifier];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"WorkReportTableCell" owner:self options:nil] lastObject];
+    }
+    
+    NSInteger row = [indexPath row];
+    NSDictionary *dict = [displayArray objectAtIndex:row];
+
+    [cell displayData:dict];
+    //设置cell点击后无背景颜色
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    return cell;
+}
+
+/**
+ * 点击列表中的条目视图
+ **/
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(void)addReportBtnClick
+{
+    [UtilTool ShowAlertView:@"1" setMsg:@"2"];
+}
+
+
+@end
